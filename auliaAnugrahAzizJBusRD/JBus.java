@@ -14,11 +14,23 @@ public class JBus
         System.out.println(getBusName());
         System.out.println(isDiscount());
         System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 900));
+        System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 0));
+        System.out.println("getDiscountPercentage = " + getDiscountPercentage(0, 0));
         System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 10.0f));
+        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 100.0f));
+        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 120.0f));
+        System.out.println("getDiscountedPrice = " + getDiscountedPrice(0, 0.0f));
         System.out.println("getOriginalPrice = " + getOriginalPrice(900, 10.0f));
+        System.out.println("getOriginalPrice = " + getOriginalPrice(1000, 0.0f));
+        System.out.println("getOriginalPrice = " + getOriginalPrice(0, 100.0f));
+        System.out.println("getOriginalPrice = " + getOriginalPrice(0, 120.0f));
         System.out.println("getAdminFeePercentage = " + getAdminFeePercentage());
         System.out.println("getAdminFee = " + getAdminFee(1000));
+        System.out.println("getAdminFee = " + getAdminFee(500));
+        System.out.println("getAdminFee = " + getAdminFee(0));
         System.out.println("getTotalPrice = " + getTotalPrice(10000, 2));
+        System.out.println("getTotalPrice = " + getTotalPrice(5000, 1));
+        System.out.println("getTotalPrice = " + getTotalPrice(0, 2));
     }
 
     public static int getBusId() {
@@ -35,7 +47,7 @@ public class JBus
     
     public static float getDiscountPercentage(int beforeDiscount, int afterDiscount){
         if(beforeDiscount > afterDiscount) {
-            return ((beforeDiscount - afterDiscount) / beforeDiscount) * 100;
+            return (((float)beforeDiscount - (float)afterDiscount) / (float)beforeDiscount) * 100;
         } else {
             return 0.0f;   
         }
@@ -50,7 +62,8 @@ public class JBus
     
     public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
         float discountDecimal = discountPercentage / 100;
-        return discountedPrice / (1 - (int)discountDecimal);
+        float originalPrice = discountedPrice / (1 - discountDecimal);
+        return (int)originalPrice;
     }
     
     public static float getAdminFeePercentage() {
