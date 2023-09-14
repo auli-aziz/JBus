@@ -16,11 +16,11 @@ public class JBus
         System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 900));
         System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 0));
         System.out.println("getDiscountPercentage = " + getDiscountPercentage(0, 0));
-        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 10.0f));
+        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 44.5f));
         System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 100.0f));
         System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 120.0f));
         System.out.println("getDiscountedPrice = " + getDiscountedPrice(0, 0.0f));
-        System.out.println("getOriginalPrice = " + getOriginalPrice(900, 10.0f));
+        System.out.println("getOriginalPrice = " + getOriginalPrice(5550, 10.0f));
         System.out.println("getOriginalPrice = " + getOriginalPrice(1000, 0.0f));
         System.out.println("getOriginalPrice = " + getOriginalPrice(0, 100.0f));
         System.out.println("getOriginalPrice = " + getOriginalPrice(0, 120.0f));
@@ -57,7 +57,8 @@ public class JBus
         if(discountPercentage > 100.0f) {
             discountPercentage = 100.0f;
         }
-        return price - (price * (int)discountPercentage) / 100;
+        float discountedPrice = price - (price * discountPercentage) / 100;
+        return (int)discountedPrice;
     }
     
     public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
