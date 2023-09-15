@@ -43,10 +43,8 @@ public class Price
     
     private double getRebatedPrice() {
         if(rebate > price) {
-            price *= -1;
-            return price;
+            return 0;
         }
-        price -= rebate;
-        return price;
+        return price - rebate;
     }
 }

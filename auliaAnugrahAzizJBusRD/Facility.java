@@ -9,12 +9,12 @@ package auliaAnugrahAzizJBusRD;
  */
 public enum Facility
 {
-    AC, 
-    LUNCH, 
-    TOILET, 
-    COOL_BOX, 
+    AC,
+    LUNCH,
+    TOILET,
+    COOL_BOX,
     WIFI,
     LCD_TV,
     ELECTRIC_SOCKET,
-    LARGE_BAGGAGE;   
+    LARGE_BAGGAGE; 
 }
