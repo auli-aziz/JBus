@@ -12,7 +12,7 @@ public class Rating
     private long count;
     private long total;
     
-    Rating() {
+    public Rating() {
         this.count = 0;
         this.total = 0;
     }
