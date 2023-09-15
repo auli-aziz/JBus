@@ -10,27 +10,17 @@ package auliaAnugrahAzizJBusRD;
 public class JBus
 {
     public static void main(String[] args) {
-        System.out.println(getBusId());
-        System.out.println(getBusName());
-        System.out.println(isDiscount());
-        System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 900));
-        System.out.println("getDiscountPercentage = " + getDiscountPercentage(1000, 0));
-        System.out.println("getDiscountPercentage = " + getDiscountPercentage(0, 0));
-        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 44.5f));
-        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 100.0f));
-        System.out.println("getDiscountedPrice = " + getDiscountedPrice(1000, 120.0f));
-        System.out.println("getDiscountedPrice = " + getDiscountedPrice(0, 0.0f));
-        System.out.println("getOriginalPrice = " + getOriginalPrice(5550, 10.0f));
-        System.out.println("getOriginalPrice = " + getOriginalPrice(1000, 0.0f));
-        System.out.println("getOriginalPrice = " + getOriginalPrice(0, 100.0f));
-        System.out.println("getOriginalPrice = " + getOriginalPrice(0, 120.0f));
-        System.out.println("getAdminFeePercentage = " + getAdminFeePercentage());
-        System.out.println("getAdminFee = " + getAdminFee(1000));
-        System.out.println("getAdminFee = " + getAdminFee(500));
-        System.out.println("getAdminFee = " + getAdminFee(0));
-        System.out.println("getTotalPrice = " + getTotalPrice(10000, 2));
-        System.out.println("getTotalPrice = " + getTotalPrice(5000, 1));
-        System.out.println("getTotalPrice = " + getTotalPrice(0, 2));
+        Bus testBus = createBus();
+        System.out.println(testBus.name);
+        System.out.println(testBus.facility);
+        System.out.println(testBus.price.price);
+        System.out.println(testBus.capacity);
+    }
+    
+    public static Bus createBus() {
+        Price price = new Price(750000, 5);
+        Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25);
+        return bus;
     }
 
     public static int getBusId() {
