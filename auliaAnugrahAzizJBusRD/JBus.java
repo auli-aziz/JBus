@@ -15,6 +15,13 @@ public class JBus
         System.out.println(testBus.facility);
         System.out.println(testBus.price.price);
         System.out.println(testBus.capacity);
+        
+        Rating rate = new Rating();
+        System.out.println(rate.getAverage());
+        rate.insert(10);
+        System.out.println(rate.getAverage());
+        System.out.println(rate.getCount());
+        System.out.println(rate.getTotal());
     }
     
     public static Bus createBus() {

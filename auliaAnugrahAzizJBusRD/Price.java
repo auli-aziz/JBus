@@ -31,20 +31,21 @@ public class Price
         this.rebate = rebate;
     }
     
-    private double getDiscountedPrice() {
+    public double getDiscountedPrice() {
         if(discount > 100) {
             this.discount = 100;
         } else if(discount == 100) {
             return 0;
         }
-        price -= (price*(((double)discount)*0.01));
-        return price;
+        double discountPrice = price - (price*(((double)discount)*0.01));
+        return discountPrice;
     }
     
-    private double getRebatedPrice() {
+    public double getRebatedPrice() {
         if(rebate > price) {
             return 0;
         }
-        return price - rebate;
+        double rebatedPrice = price - rebate;
+        return rebatedPrice;
     }
 }
