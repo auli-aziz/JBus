@@ -37,17 +37,20 @@ public class Voucher
     }
     
     public double apply(Price price) {
-        this.used = true;
         double discountPrice = price.price * (this.cut * 0.01);
-        double returnVal1 = price.price - discountPrice;
-        double returnVal2 = price.price - price.rebate;
+        double returnVal1 = (this.cut < price.price) ? price.price - discountPrice : 0;
+        double returnVal2 = (this.cut < price.price) ? price.price - this.cut : 0;
+        boolean state = canApply(price);
         
-        if(this.type == Type.DISCOUNT) {
+        if(state && this.type == Type.DISCOUNT) {
+            this.used = true;
             return returnVal1;
-        } else if(this.type == Type.REBATE) {
+        } else if(state && this.type == Type.REBATE) {
+            this.used = true;
             return returnVal2;
-        } 
-        
-        return 0;
+        } else {            
+            this.used = true;
+            return price.price;
+        }
     }
 }
