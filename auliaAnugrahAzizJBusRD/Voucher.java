@@ -46,8 +46,8 @@ public class Voucher
             return returnVal1;
         } else if(this.type == Type.REBATE) {
             return returnVal2;
-        } else {
-            return 0;
-        }
+        } 
+        
+        return 0;
     }
 }
