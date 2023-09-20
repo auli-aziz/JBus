@@ -16,6 +16,22 @@ public class Voucher
     public int code;
     public Type type;
     
+    public static void main(String[] args) {
+        Voucher voucher1 = new Voucher("voucher 1", 11, Type.DISCOUNT, 90, 110);
+        Voucher voucher2 = new Voucher("voucher 1", 11, Type.DISCOUNT, 90, 90);
+        Price item1 = new Price(100, 10);
+        
+        System.out.println(voucher1.canApply(item1));
+        System.out.println(voucher1.apply(item1));
+        System.out.println(voucher1.canApply(item1));
+        System.out.println(voucher1.apply(item1));
+        
+        System.out.println(voucher2.canApply(item1));
+        System.out.println(voucher2.apply(item1));
+        System.out.println(voucher2.canApply(item1));
+        System.out.println(voucher2.apply(item1));
+    }
+    
     public Voucher(String name, int code, Type type, double minimum, double cut) {
         this.name = name;
         this.code = code;
@@ -38,18 +54,15 @@ public class Voucher
     
     public double apply(Price price) {
         double discountPrice = price.price * (this.cut * 0.01);
-        double returnVal1 = (this.cut < price.price) ? price.price - discountPrice : 0;
+        double returnVal1 = (this.cut < 100) ? price.price - discountPrice : 0;
         double returnVal2 = (this.cut < price.price) ? price.price - this.cut : 0;
         boolean state = canApply(price);
-        
+        this.used = true;
         if(state && this.type == Type.DISCOUNT) {
-            this.used = true;
             return returnVal1;
         } else if(state && this.type == Type.REBATE) {
-            this.used = true;
             return returnVal2;
         } else {            
-            this.used = true;
             return price.price;
         }
     }
