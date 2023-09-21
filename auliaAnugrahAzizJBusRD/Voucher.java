@@ -7,7 +7,7 @@ package auliaAnugrahAzizJBusRD;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Voucher
+public class Voucher extends Serializable
 {
     public String name;
     private boolean used;
@@ -17,22 +17,11 @@ public class Voucher
     public Type type;
     
     public static void main(String[] args) {
-        Voucher voucher1 = new Voucher("voucher 1", 11, Type.DISCOUNT, 90, 110);
-        Voucher voucher2 = new Voucher("voucher 1", 11, Type.DISCOUNT, 90, 90);
-        Price item1 = new Price(100, 10);
         
-        System.out.println(voucher1.canApply(item1));
-        System.out.println(voucher1.apply(item1));
-        System.out.println(voucher1.canApply(item1));
-        System.out.println(voucher1.apply(item1));
-        
-        System.out.println(voucher2.canApply(item1));
-        System.out.println(voucher2.apply(item1));
-        System.out.println(voucher2.canApply(item1));
-        System.out.println(voucher2.apply(item1));
     }
     
-    public Voucher(String name, int code, Type type, double minimum, double cut) {
+    public Voucher(int id, String name, int code, Type type, double minimum, double cut) {
+        super(id);
         this.name = name;
         this.code = code;
         this.type = type;
