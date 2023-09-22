@@ -26,9 +26,15 @@ public class JBus
         Payment testPayment = new Payment(1, 1, 1, "A", 1, "A", "A");
         Invoice testInvoice = new Invoice(2,2,2, "B");
         Station testStation = new Station(3, "C", City.DEPOK);
+        Account testAccount = new Account(12 ,"Hello", "Hello2", "Hello3");
+        Renter testRenter = new Renter(101, "test", 81);
+        Payment testPayment2 = new Payment(1, testAccount, testRenter, "A", 1, "A", "A");
+        Invoice testInvoice2 = new Invoice(2,testAccount,testRenter, "B");
         System.out.println(testPayment.print());
         System.out.println(testInvoice.print());
         System.out.println(testStation.print());
+        System.out.println(testPayment2.print());
+        System.out.println(testInvoice2.print());
     }
     
     public static Bus createBus() {
