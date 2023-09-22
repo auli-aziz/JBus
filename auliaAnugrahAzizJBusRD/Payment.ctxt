@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Payment
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Payment\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Payment\ here.\r\n\r\n\ @Aulia\ Anugrah\ Aziz\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=id\ buyerId\ renterId\ time\ busId\ departureDate\ busSeat
 comment1.target=Payment(int,\ int,\ int,\ java.lang.String,\ int,\ java.lang.String,\ java.lang.String)
 comment2.params=id\ buyer\ renter\ time\ busId\ departureDate\ busSeat

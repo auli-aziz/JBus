@@ -4,7 +4,7 @@ package auliaAnugrahAzizJBusRD;
 /**
  * Write a description of class Invoice here.
  *
- * @author (your name)
+ * @Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class Invoice extends Serializable

@@ -4,7 +4,7 @@ package auliaAnugrahAzizJBusRD;
 /**
  * Write a description of class Voucher here.
  *
- * @author (your name)
+ * @Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class Voucher extends Serializable
@@ -15,10 +15,6 @@ public class Voucher extends Serializable
     public double cut;
     public int code;
     public Type type;
-    
-    public static void main(String[] args) {
-        
-    }
     
     public Voucher(int id, String name, int code, Type type, double minimum, double cut) {
         super(id);
