@@ -28,7 +28,7 @@ public class Invoice extends Serializable
     }
     
     public String print() {
-        String returnVal = time + " " + Integer.toString(this.buyerId) + " " + Integer.toString(this.renterId) + " " + Integer.toString(super.id);
+        String returnVal = Integer.toString(id) + " " + Integer.toString(this.buyerId) + " " + Integer.toString(this.renterId) + " " + time;
         return returnVal;
     }
 }
