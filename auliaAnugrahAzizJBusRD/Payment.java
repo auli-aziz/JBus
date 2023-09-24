@@ -9,19 +9,19 @@ package auliaAnugrahAzizJBusRD;
  */
 public class Payment extends Invoice
 {
-    private int busId;
+    protected int busId;
     public String departureDate;
     public String busSeat;
     
     public Payment(int id, int buyerId, int renterId, String time, int busId, String departureDate, String busSeat) {
-        super(id, renterId, renterId, time);
+        super(id, buyerId, renterId, time);
         this.busId = busId;
         this.departureDate = departureDate;
         this.busSeat = busSeat;
     }
     
     public Payment(int id, Account buyer, Renter renter, String time, int busId, String departureDate, String busSeat) {
-        super(id, buyer, renter, time);
+        super(id, buyer.id, renter.id, time);
         this.busId = busId;
         this.departureDate = departureDate;
         this.busSeat = busSeat;
