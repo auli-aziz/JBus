@@ -31,10 +31,10 @@ public class JBus
         Payment testPayment2 = new Payment(1, testAccount, testRenter, "A", 1, "A", "A");
         Invoice testInvoice2 = new Invoice(2,testAccount,testRenter, "B");
         System.out.println(testPayment.print());
-        System.out.println(testInvoice.print());
+        System.out.println(testInvoice.toString());
         System.out.println(testStation.print());
         System.out.println(testPayment2.print());
-        System.out.println(testInvoice2.print());
+        System.out.println(testInvoice2.toString());
     }
     
     public static Bus createBus() {
