@@ -48,4 +48,8 @@ public class Price
     //     double rebatedPrice = this.price - this.rebate;
     //     return rebatedPrice;
     // }
+    
+    public String toString() {
+        return "Rebate: " + this.rebate + "\nPrice: " + this.price;
+    }
 }

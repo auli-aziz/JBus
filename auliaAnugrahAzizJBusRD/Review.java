@@ -19,7 +19,6 @@ public class Review extends Serializable
     }
     
     public String toString() {
-        String returnVal = "Id: " + Integer.toString(this.id) + "\nDate: " + this.date + "\nDesc: " + this.desc;
-        return returnVal;
+        return "Id: " + Integer.toString(this.id) + "\nDate: " + this.date + "\nDesc: " + this.desc;
     }
 }

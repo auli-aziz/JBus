@@ -4,5 +4,5 @@ comment0.text=\r\n\ Write\ a\ description\ of\ class\ Station\ here.\r\n\r\n\ @A
 comment1.params=id\ stationName\ city
 comment1.target=Station(int,\ java.lang.String,\ City)
 comment2.params=
-comment2.target=java.lang.String\ print()
+comment2.target=java.lang.String\ toString()
 numComments=3

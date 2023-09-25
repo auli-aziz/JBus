@@ -30,10 +30,10 @@ public class JBus
         Renter testRenter = new Renter(101, "test", 81);
         Payment testPayment2 = new Payment(1, testAccount, testRenter, "A", 1, "A", "A");
         Invoice testInvoice2 = new Invoice(2,testAccount,testRenter, "B");
-        System.out.println(testPayment.print());
+        System.out.println(testPayment.toString());
         System.out.println(testInvoice.toString());
-        System.out.println(testStation.print());
-        System.out.println(testPayment2.print());
+        System.out.println(testStation.toString());
+        System.out.println(testPayment2.toString());
         System.out.println(testInvoice2.toString());
     }
     

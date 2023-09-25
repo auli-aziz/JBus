@@ -18,7 +18,7 @@ public class Station extends Serializable
         this.city = city;
     }
     
-    public String print() {
+    public String toString() {
         return Integer.toString(this.id) + " " + this.stationName + " " + this.city;
     }
 }

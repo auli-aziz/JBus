@@ -34,8 +34,7 @@ public class Invoice extends Serializable
     }
     
     public String toString() {
-        String returnVal = "Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time;
-        return returnVal;
+        return "Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time;
     }
     
     public enum BusRating {
