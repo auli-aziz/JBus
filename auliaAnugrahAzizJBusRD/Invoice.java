@@ -34,7 +34,7 @@ public class Invoice extends Serializable
     }
     
     public String toString() {
-        String returnVal = Integer.toString(id) + " " + Integer.toString(this.buyerId) + " " + Integer.toString(this.renterId) + " " + time;
+        String returnVal = "Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time;
         return returnVal;
     }
     

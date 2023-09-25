@@ -28,7 +28,7 @@ public class Payment extends Invoice
     }
     
     public String print() {
-        String returnVal = Integer.toString(id) + " " + Integer.toString(buyerId) + " " + Integer.toString(renterId) + " " + time + " " + Integer.toString(busId) + " " + this.departureDate + " " + this.busSeat;
+        String returnVal = "Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate + "\nBusSeat: " + this.busSeat;
         return returnVal;
     }
     

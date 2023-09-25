@@ -37,11 +37,11 @@ public class JBus
         System.out.println(testInvoice2.toString());
     }
     
-    public static Bus createBus() {
-        Price price = new Price(750000, 5);
-        Bus bus = new Bus(101, "Netlab Bus", Facility.LUNCH, price, 25);
-        return bus;
-    }
+    //public static Bus createBus() {
+    //    Price price = new Price(750000, 5);
+    //    Bus bus = new Bus(101, "Netlab Bus", Facility.LUNCH, price, 25);
+    //    return bus;
+    //}
 
     public static int getBusId() {
         return 0;
