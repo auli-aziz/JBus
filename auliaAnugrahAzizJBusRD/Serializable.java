@@ -9,7 +9,7 @@ package auliaAnugrahAzizJBusRD;
  */
 public class Serializable
 {
-    public static int id;
+    public final int id;
     
     public Serializable(int id){
         this.id = id;

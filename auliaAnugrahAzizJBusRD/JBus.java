@@ -10,31 +10,19 @@ package auliaAnugrahAzizJBusRD;
 public class JBus
 {
     public static void main(String[] args) {
-        //Bus testBus = createBus();
-        //System.out.println(testBus.name);
-        //System.out.println(testBus.facility);
-        //System.out.println(testBus.price.price);
-        //System.out.println(testBus.capacity);
         
-        //Rating rate = new Rating();
-        //System.out.println(rate.getAverage());
-        //rate.insert(10);
-        //System.out.println(rate.getAverage());
-        //System.out.println(rate.getCount());
-        //System.out.println(rate.getTotal());
-        
-        Payment testPayment = new Payment(1, 1, 1, "A", 1, "A", "A");
-        Invoice testInvoice = new Invoice(2,2,2, "B");
-        Station testStation = new Station(3, "C", City.DEPOK);
-        Account testAccount = new Account(12 ,"Hello", "Hello2", "Hello3");
-        Renter testRenter = new Renter(101, "test", 81);
-        Payment testPayment2 = new Payment(1, testAccount, testRenter, "A", 1, "A", "A");
-        Invoice testInvoice2 = new Invoice(2,testAccount,testRenter, "B");
-        System.out.println(testPayment.toString());
-        System.out.println(testInvoice.toString());
-        System.out.println(testStation.toString());
-        System.out.println(testPayment2.toString());
-        System.out.println(testInvoice2.toString());
+        Price testPrice = new Price(100000, 20000);
+        Station testDeparture = new Station(2, "Depok Terminal", City.DEPOK, "Jl. Margonda Raya");
+        Station testArrival = new Station(3, "Halte UI", City.JAKARTA, "Universitas Indonesia");
+        Bus testBus = new Bus(1, "Busway", Facility.AC, testPrice, 50, BusType.REGULER, City.DEPOK, testDeparture, testArrival);
+        Account testAccount = new Account(4, "Bob", "bob@gmail.com", "bob");
+        Review testReview = new Review(99, "23 Agustus 2023", "Bad Quality");
+        Rating testRating = new Rating();
+        System.out.println("\nReview\n" + testReview);
+        System.out.println("\nBus \n" + testBus);
+        System.out.println("\nAccount\n" + testAccount);
+        System.out.println("\nPrice\n" + testPrice);
+        System.out.println("\nRating\n" + testRating);
     }
     
     //public static Bus createBus() {
