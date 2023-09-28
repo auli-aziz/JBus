@@ -14,14 +14,14 @@ public class Payment extends Invoice
     public String busSeat;
     
     public Payment(int id, int buyerId, int renterId, String time, int busId, String departureDate, String busSeat) {
-        super(id, buyerId, renterId, time);
+        super(id, buyerId, renterId);
         this.busId = busId;
         this.departureDate = departureDate;
         this.busSeat = busSeat;
     }
     
     public Payment(int id, Account buyer, Renter renter, String time, int busId, String departureDate, String busSeat) {
-        super(id, buyer.id, renter.id, time);
+        super(id, buyer.id, renter.id);
         this.busId = busId;
         this.departureDate = departureDate;
         this.busSeat = busSeat;
