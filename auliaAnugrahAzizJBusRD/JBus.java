@@ -11,18 +11,20 @@ public class JBus
 {
     public static void main(String[] args) {
         
-        Price testPrice = new Price(100000, 20000);
-        Station testDeparture = new Station(2, "Depok Terminal", City.DEPOK, "Jl. Margonda Raya");
-        Station testArrival = new Station(3, "Halte UI", City.JAKARTA, "Universitas Indonesia");
-        Bus testBus = new Bus(1, "Busway", Facility.AC, testPrice, 50, BusType.REGULER, City.DEPOK, testDeparture, testArrival);
-        Account testAccount = new Account(4, "Bob", "bob@gmail.com", "bob");
-        Review testReview = new Review(99, "23 Agustus 2023", "Bad Quality");
-        Rating testRating = new Rating();
-        System.out.println("\nReview\n" + testReview);
-        System.out.println("\nBus \n" + testBus);
-        System.out.println("\nAccount\n" + testAccount);
-        System.out.println("\nPrice\n" + testPrice);
-        System.out.println("\nRating\n" + testRating);
+        Price[] unfilteredArray = new Price[5];
+        for(int i = 0; i < unfilteredArray.length; i++) {
+            int j = 5000;
+            unfilteredArray[i] = new Price((i+1)*j);
+        }
+        
+        System.out.println("Price List");
+        for (Price price : unfilteredArray) {
+            System.out.println(price.price);    
+        }
+        
+        System.out.println("Below 12000.0");
+        System.out.println(Validate.filter(unfilteredArray, 12000, true));
+        System.out.println(Validate.filter(unfilteredArray, 10000, false));
     }
     
     //public static Bus createBus() {

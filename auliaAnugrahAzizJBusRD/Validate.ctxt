@@ -3,4 +3,6 @@ comment0.target=Validate
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Validate\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=Validate()
-numComments=2
+comment2.params=list\ value\ less
+comment2.target=java.util.ArrayList\ filter(Price[],\ int,\ boolean)
+numComments=3

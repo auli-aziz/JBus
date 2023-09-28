@@ -9,6 +9,6 @@ package auliaAnugrahAzizJBusRD;
  */
 public interface FileParser
 {
-    //public Object write();
-    //public boolean read(String );
+    public abstract Object write();
+    public abstract boolean read();
 }
