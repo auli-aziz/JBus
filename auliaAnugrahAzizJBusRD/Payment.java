@@ -42,7 +42,7 @@ public class Payment extends Invoice
     }
     
     public String getDepartureInfo() {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("'Formatted Date: ' MMMM dd, yyyy HH:mm:ss");
+        SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         String curr_date = SDFormat.format(cal.getTime());
         return "Current Date: " + curr_date + " Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate + "\nBusSeat: " + this.busSeat;
