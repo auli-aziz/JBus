@@ -28,14 +28,13 @@ public class Validate
                     temp2.add(temp.get(i));
                 }
             }
-            return temp2;
         } else {
             for(int i = 0; i < list.length; i++) {
                 if(temp.get(i) > value) {
                     temp2.add(temp.get(i));
                 }
             }
-            return temp2;
         }
+        return temp2;
     }
 }

@@ -7,7 +7,7 @@ package auliaAnugrahAzizJBusRD;
  * @Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
-public class Voucher extends Serializable
+public class Voucher extends Serializable implements FileParser
 {
     public String name;
     private boolean used;

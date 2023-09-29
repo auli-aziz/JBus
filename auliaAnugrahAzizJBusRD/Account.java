@@ -7,7 +7,7 @@ package auliaAnugrahAzizJBusRD;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Account extends Serializable
+public class Account extends Serializable implements FileParser
 {
     public String email;
     public String name;

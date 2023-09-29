@@ -22,16 +22,10 @@ public class JBus
             System.out.println(price.price);    
         }
         
-        System.out.println("Below 12000.0");
-        System.out.println(Validate.filter(unfilteredArray, 12000, true));
-        System.out.println(Validate.filter(unfilteredArray, 10000, false));
+        
     }
     
-    //public static Bus createBus() {
-    //    Price price = new Price(750000, 5);
-    //    Bus bus = new Bus(101, "Netlab Bus", Facility.LUNCH, price, 25);
-    //    return bus;
-    //}
+    
 
     public static int getBusId() {
         return 0;
