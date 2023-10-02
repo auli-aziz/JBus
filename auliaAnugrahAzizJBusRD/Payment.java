@@ -6,7 +6,7 @@ import java.text.*;
 /**
  * Write a description of class Payment here.
  *
- * @Aulia Anugrah Aziz
+ * @author Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class Payment extends Invoice
@@ -26,7 +26,7 @@ public class Payment extends Invoice
     
     public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat) {
         super(id, buyer.id, renter.id);
-        departureDate.add(Calendar.DATE, 2);
+        
         this.busId = busId;
         this.departureDate = Calendar.getInstance();
         this.departureDate.add(Calendar.DATE, 2);
@@ -43,15 +43,13 @@ public class Payment extends Invoice
     
     public String getDepartureInfo() {
         SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        String curr_date = SDFormat.format(cal.getTime());
+        String curr_date = SDFormat.format(departureDate.getTime());
         return "Current Date: " + curr_date + " Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate + "\nBusSeat: " + this.busSeat;
     }
     
     public String getTime() {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("'Formatted Date: ' MMMM dd, yyyy HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        String curr_date = SDFormat.format(cal.getTime());
+        SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
+        String curr_date = SDFormat.format(departureDate.getTime());
         return curr_date;
     }
 }

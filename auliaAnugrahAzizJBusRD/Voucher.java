@@ -51,4 +51,13 @@ public class Voucher extends Serializable implements FileParser
             return price.price;
         }
     }
+    
+    
+    public Object write() {
+        return null;
+    }
+    
+    public boolean read(String file) {
+        return false;
+    }
 }

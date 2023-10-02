@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 /**
  * Write a description of class Schedule here.
  *
- * @author (your name)
+ * @author Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class Schedule
@@ -23,7 +23,7 @@ public class Schedule
     
     private void initializeSeatAvailability(int numberOfSeats) {
         this.seatAvailability  = new LinkedHashMap<String, Boolean>();
-        for(int seatNumber = 1; seatNumber < numberOfSeats; seatNumber++) {
+        for(int seatNumber = 1; seatNumber <= numberOfSeats; seatNumber++) {
             this.seatAvailability.put("RD" + seatNumber, true);    
         }
         

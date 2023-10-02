@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 /**
  * Write a description of class Bus here.
  *
- * @author (your name)
+ * @author Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class Bus extends Serializable implements FileParser
@@ -50,12 +50,15 @@ public class Bus extends Serializable implements FileParser
         String curr_date = SDFormat.format(schedule.departureSchedule.getTime());
         System.out.println("Tanggal keberangkatan: " + curr_date);
         for(int i = 1; i <= schedule.seatAvailability.size(); i++) {
-            System.out.print("RD" + i + ": ");
-            System.out.println(schedule.seatAvailability.get("RD" + i));
+            for(int j = 0; j < schedule.seatAvailability.size(); j++) {
+                System.out.print("RD" + i + ": ");
+                System.out.print(schedule.seatAvailability.get("RD" + i));    
+            }
+            System.out.print("\n");
         }
     }
     
-    public boolean read() {
+    public boolean read(String file) {
         return false;
     }
     
