@@ -1,6 +1,6 @@
 package auliaAnugrahAzizJBusRD;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.text.*;
 
 /**
@@ -12,24 +12,24 @@ import java.text.*;
 public class Payment extends Invoice
 {
     private int busId;
-    public Calendar departureDate;
+    public Timestamp departureDate;
     public String busSeat;
     
-    public Payment(int id, int buyerId, int renterId, int busId, String busSeat) {
+    public Payment(int id, int buyerId, int renterId, int busId, String busSeat, Timestamp departureDate) {
         super(id, buyerId, renterId);
         
         this.busId = busId;
-        this.departureDate = Calendar.getInstance();
-        this.departureDate.add(Calendar.DATE, 2);
+        this.departureDate = new Timestamp(System.currentTimeMillis());
+        // this.departureDate = Calendar.getInstance();
+        // this.departureDate.add(Calendar.DATE, 2);
         this.busSeat = busSeat;
     }
     
-    public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat) {
+    public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat, Timestamp departureDate) {
         super(id, buyer.id, renter.id);
         
         this.busId = busId;
-        this.departureDate = Calendar.getInstance();
-        this.departureDate.add(Calendar.DATE, 2);
+        this.departureDate = new Timestamp(System.currentTimeMillis());
         this.busSeat = busSeat;
     }
     
@@ -44,7 +44,7 @@ public class Payment extends Invoice
     public String getDepartureInfo() {
         SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
         String curr_date = SDFormat.format(departureDate.getTime());
-        return "Current Date: " + curr_date + " Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate + "\nBusSeat: " + this.busSeat;
+        return "Current Date: " + curr_date + " Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time.getTime() + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate.getTime() + "\nBusSeat: " + this.busSeat;
     }
     
     public String getTime() {
@@ -52,4 +52,27 @@ public class Payment extends Invoice
         String curr_date = SDFormat.format(departureDate.getTime());
         return curr_date;
     }
+    
+    // TODO : Debugging isAvailable
+    public static boolean isAvailable(Timestamp departureSchedule, String seat, Bus bus) {
+        for(Schedule s : bus.schedules) {
+            if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean makeBooking(Timestamp departureSchedule, String seat, Bus bus) {
+        Boolean status = isAvailable(departureSchedule, seat, bus);
+        
+        for(Schedule s : bus.schedules) {
+            if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
+                s.bookSeat(seat);
+                return true;
+            }
+        }
+        return false;
+    }
 }
+

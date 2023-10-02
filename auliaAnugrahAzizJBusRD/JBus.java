@@ -1,42 +1,51 @@
 package auliaAnugrahAzizJBusRD;
-import java.util.Calendar;
 
+import java.sql.Timestamp;
 
 /**
  * Write a description of class JBus here.
  *
- * @Aulia Anugrah Aziz
+ * @author Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
 public class JBus
 {
     public static void main(String[] args) {
+        Bus b = createBus();
+        Timestamp schedule1 = Timestamp.valueOf("2023-7-18 15:00:00");
+        Timestamp schedule2 = Timestamp.valueOf("2023-7-20 12:00:00");
         
-        Price[] unfilteredArray = new Price[5];
-        for(int i = 0; i < unfilteredArray.length; i++) {
-            int j = 5000;
-            unfilteredArray[i] = new Price((i+1)*j);
+        b.addSchedule(schedule1);
+        b.addSchedule(schedule2);
+        
+        for(Schedule s: b.schedules){
+            s.printSchedule(s);
         }
         
-        System.out.println("Price List");
-        for (Price price : unfilteredArray) {
-            System.out.println(price.price);    
-        }
+        // Invalide date
+        Timestamp t1 = Timestamp.valueOf("2023-7-19 15:00:00");
+        System.out.println("\nMake booking at July 19, 2023 15:00:00 seat RD12");
+        System.out.print(Payment.makeBooking(t1, "RD12", b));
         
-        System.out.println("Below 12000.0");
-        System.out.println(Validate.filter(unfilteredArray, 12000, true));
-        System.out.println(Validate.filter(unfilteredArray, 10000, false));
-        Bus testBus=createBus(); 
-        Payment testPayment=new Payment(1,1,1,testBus.id,"S1"); 
-        System.out.println(testPayment.getDepartureInfo()); 
-        System.out.println(testPayment.getTime()); 
-        Calendar schedule1=Calendar.getInstance(); 
-        testBus.addSchedule(schedule1); 
-        Calendar schedule2=Calendar.getInstance(); 
-        schedule2.add(Calendar.DAY_OF_MONTH,3); 
-        testBus.addSchedule(schedule2); 
-        for(Schedule s: testBus.schedules){ 
-            testBus.printSchedule(s); 
+        // Valid date, invalid seat
+        Timestamp t2 = Timestamp.valueOf("2023-7-18 15:00:00");
+        System.out.println("\nMake booking at July 18, 2023 15:00:00 seat RD20");
+        System.out.print(Payment.makeBooking(t2, "RD20", b));
+        
+        // Valid date, valid seat
+        System.out.println("\nMake booking at July 18, 2023 15:00:00 seat RD07");
+        System.out.print(Payment.makeBooking(t2, "RD07", b));
+        
+        Timestamp t3 = Timestamp.valueOf("2023-7-20 12:00:00");
+        System.out.println("\nMake booking at July 20, 2023 12:00:00 seat RD01");
+        System.out.print(Payment.makeBooking(t3, "RD01", b));
+        
+        System.out.println("\nMake booking at July 20, 2023 12:00:00 seat RD01 again");
+        System.out.print(Payment.makeBooking(t3, "RD01", b));
+        
+        System.out.println("\nUpdated Schedule\n");
+        for(Schedule s: b.schedules){
+            s.printSchedule(s);
         }
     }
     

@@ -1,8 +1,8 @@
 package auliaAnugrahAzizJBusRD;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 
 /**
@@ -41,21 +41,8 @@ public class Bus extends Serializable implements FileParser
         return "Id: " + this.id + "\nName: " + this.name + "\nFacility: " + this.facility + this.price + "\nCapacity: " + this.capacity + "\nBusType: " + this.busType + "\nCity: " + this.city + this.departure + this.arrival;
     }
     
-    public void addSchedule(Calendar calendar) {
+    public void addSchedule(Timestamp calendar) {
         this.schedules.add(new Schedule(calendar, capacity));
-    }
-    
-    public void printSchedule(Schedule schedule) {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM, yyyy HH:mm:ss");
-        String curr_date = SDFormat.format(schedule.departureSchedule.getTime());
-        System.out.println("Tanggal keberangkatan: " + curr_date);
-        for(int i = 1; i <= schedule.seatAvailability.size(); i++) {
-            for(int j = 0; j < schedule.seatAvailability.size(); j++) {
-                System.out.print("RD" + i + ": ");
-                System.out.print(schedule.seatAvailability.get("RD" + i));    
-            }
-            System.out.print("\n");
-        }
     }
     
     public boolean read(String file) {
