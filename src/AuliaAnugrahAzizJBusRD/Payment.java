@@ -19,17 +19,15 @@ public class Payment extends Invoice
         super(id, buyerId, renterId);
         
         this.busId = busId;
-        this.departureDate = new Timestamp(System.currentTimeMillis());
-        // this.departureDate = Calendar.getInstance();
-        // this.departureDate.add(Calendar.DATE, 2);
         this.busSeat = busSeat;
+        this.departureDate = departureDate;
     }
     
     public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat, Timestamp departureDate) {
         super(id, buyer.id, renter.id);
         
         this.busId = busId;
-        this.departureDate = new Timestamp(System.currentTimeMillis());
+        this.departureDate = departureDate;
         this.busSeat = busSeat;
     }
     
@@ -52,8 +50,7 @@ public class Payment extends Invoice
         String curr_date = SDFormat.format(departureDate.getTime());
         return curr_date;
     }
-    
-    // TODO : Debugging isAvailable
+
     public static boolean isAvailable(Timestamp departureSchedule, String seat, Bus bus) {
         for(Schedule s : bus.schedules) {
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
@@ -64,8 +61,6 @@ public class Payment extends Invoice
     }
     
     public static boolean makeBooking(Timestamp departureSchedule, String seat, Bus bus) {
-        Boolean status = isAvailable(departureSchedule, seat, bus);
-        
         for(Schedule s : bus.schedules) {
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
                 s.bookSeat(seat);
