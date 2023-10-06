@@ -50,6 +50,6 @@ public class Price
     // }
     
     public String toString() {
-        return "\nRebate: " + this.rebate + "\nPrice: " + this.price;
+        return "\tRebate: " + this.rebate + "\tPrice: " + this.price;
     }
 }

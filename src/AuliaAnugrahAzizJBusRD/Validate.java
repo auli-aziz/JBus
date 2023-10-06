@@ -16,25 +16,20 @@ public class Validate
     
     public static ArrayList filter(Price[] list, int value, boolean less) {
         ArrayList<Double> temp = new ArrayList<>();
-        ArrayList<Double> temp2 = new ArrayList<>();
-        
-        for(int i = 0; i < list.length; i++) {
-            temp.add(list[i].price);
-        }
         
         if(less) {
-            for(int i = 0; i < list.length; i++) {
-                if(temp.get(i) <= value) {
-                    temp2.add(temp.get(i));
+            for(Price iterator : list) {
+                if(iterator.price <= value) {
+                    temp.add(iterator.price);
                 }
             }
         } else {
-            for(int i = 0; i < list.length; i++) {
-                if(temp.get(i) > value) {
-                    temp2.add(temp.get(i));
+            for(Price iterator : list) {
+                if(iterator.price > value) {
+                    temp.add(iterator.price);
                 }
             }
         }
-        return temp2;
+        return temp;
     }
 }

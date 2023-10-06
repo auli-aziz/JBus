@@ -15,16 +15,16 @@ public class Payment extends Invoice
     public Timestamp departureDate;
     public String busSeat;
     
-    public Payment(int id, int buyerId, int renterId, int busId, String busSeat, Timestamp departureDate) {
-        super(id, buyerId, renterId);
+    public Payment(int buyerId, int renterId, int busId, String busSeat, Timestamp departureDate) {
+        super(buyerId, renterId);
         
         this.busId = busId;
         this.busSeat = busSeat;
         this.departureDate = departureDate;
     }
     
-    public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat, Timestamp departureDate) {
-        super(id, buyer.id, renter.id);
+    public Payment(Account buyer, Renter renter, String time, int busId, String busSeat, Timestamp departureDate) {
+        super(buyer.id, renter.id);
         
         this.busId = busId;
         this.departureDate = departureDate;

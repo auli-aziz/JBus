@@ -23,8 +23,7 @@ public class Bus extends Serializable implements FileParser
     public City city;
     public List<Schedule> schedules;
     
-    public Bus(int id, String name, Facility facility, Price price, int capacity, BusType busType, City city, Station departure, Station arrival) {
-        super(id);
+    public Bus(String name, Facility facility, Price price, int capacity, BusType busType, City city, Station departure, Station arrival) {
         this.capacity = capacity;
         this.facility = facility;
         this.name = name;
@@ -38,7 +37,7 @@ public class Bus extends Serializable implements FileParser
     }
     
     public String toString() {
-        return "Id: " + this.id + "\nName: " + this.name + "\nFacility: " + this.facility + this.price + "\nCapacity: " + this.capacity + "\nBusType: " + this.busType + "\nCity: " + this.city + this.departure + this.arrival;
+        return "Bus ID: " + this.id + "\tName: " + this.name + "\tFacility: " + this.facility + this.price + "\tCapacity: " + this.capacity + "\tBusType: " + this.busType + "\tCity: " + this.city + this.departure + this.arrival;
     }
     
     public void addSchedule(Timestamp calendar) {
