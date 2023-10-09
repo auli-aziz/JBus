@@ -43,6 +43,7 @@ public class Algorithm {
 //        return false;
 //    }
 //
+    // count dapat digunakan untuk menghitung occupied seats (see Schedule)
 //    public static <T> int count(Iterator<T> iterator, T value) {
 //        final Predicate<T> pred = value::equals;
 //        return count(iterator, pred);
@@ -78,7 +79,8 @@ public class Algorithm {
 //        }
 //        return counter;
 //    }
-//
+
+    // find dapat digunakan untuk mencari seat yang tersedia (see Payment)
 //    public static <T> T find(Iterator<T> iterator, T value) {
 //        final Predicate<T> pred = value::equals;
 //        return find(iterator, pred);
@@ -113,7 +115,7 @@ public class Algorithm {
 //        }
 //        return null;
 //    }
-//
+
 //    public static <T> List<T> collect(Iterator<T> iterator, T value) {
 //        final Predicate<T> pred = value::equals; // kode ini mencek bila value == current
 //        return collect(iterator, pred);

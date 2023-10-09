@@ -1,6 +1,7 @@
 package auliaAnugrahAzizJBusRD;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,8 @@ public class Schedule
         
         
     }
-    
+
+    // TODO: printSchedule tidak mempunyai parameter
     public void printSchedule(Schedule schedule) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy HH:mm:ss");
         String formattedDepartureSchedule = dateFormat.format(this.departureSchedule.getTime());
@@ -58,8 +60,38 @@ public class Schedule
     public boolean isSeatAvailable(String seat) {
         return seatAvailability.getOrDefault(seat, false);
     }
+    public boolean isSeatAvailable(List<String> seatList) {
+        boolean status = false;
+        for(String seat : seatList) {
+            String current = seat;
+//            System.out.println(current);
+            if(seatAvailability.getOrDefault(current, false)) {
+                status = true;
+            }
+        }
+        return status; // ini menandakan bus sudah penuh (?)
+    }
     
     public void bookSeat(String seat) {
         this.seatAvailability.put(seat, false);
+    }
+
+    public void bookSeat(List<String> seatList) {
+        for(String seat : seatList) {
+            if(seatAvailability.getOrDefault(seat, false)) {
+                this.seatAvailability.put(seat, false); // ini booking semua seat (?)
+            }
+        }
+    }
+
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int counter = 25;
+        for(String seat : this.seatAvailability.keySet()) {
+            if(seatAvailability.get(seat)) {
+                counter--;
+            }
+        }
+        return "Schedule: " + sdf.format(this.departureSchedule) + "\tOccupied: " + Integer.toString(counter) + "/25";
     }
 }
