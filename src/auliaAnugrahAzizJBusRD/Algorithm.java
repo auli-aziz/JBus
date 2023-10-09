@@ -44,41 +44,41 @@ public class Algorithm {
 //    }
 //
     // count dapat digunakan untuk menghitung occupied seats (see Schedule)
-//    public static <T> int count(Iterator<T> iterator, T value) {
-//        final Predicate<T> pred = value::equals;
-//        return count(iterator, pred);
-//    }
-//
-//    public static <T> int count(T[] array, T value) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return count(it, value);
-//    }
-//
-//    public static <T> int count(T[] array, Predicate<T> pred) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return count(it, pred);
-//    }
-//
-//    public static <T> int count(Iterable<T> iterable, T value) {
-//        final Iterator<T> it = iterable.iterator();
-//        return count(it, value);
-//    }
-//
-//    public static <T> int count(Iterable<T> iterable, Predicate<T> pred) {
-//        final Iterator<T> it = iterable.iterator();
-//        return count(it, pred);
-//    }
-//
-//    public static <T> int count(Iterator<T> iterator, Predicate<T> pred) {
-//        int counter = 0;
-//        while (iterator.hasNext()) {
-//            T current = iterator.next();
-//            if (pred.predicate(current)) {
-//                counter++;
-//            }
-//        }
-//        return counter;
-//    }
+    public static <T> int count(Iterator<T> iterator, T value) {
+        final Predicate<T> pred = value::equals;
+        return count(iterator, pred);
+    }
+
+    public static <T> int count(T[] array, T value) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return count(it, value);
+    }
+
+    public static <T> int count(T[] array, Predicate<T> pred) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return count(it, pred);
+    }
+
+    public static <T> int count(Iterable<T> iterable, T value) {
+        final Iterator<T> it = iterable.iterator();
+        return count(it, value);
+    }
+
+    public static <T> int count(Iterable<T> iterable, Predicate<T> pred) {
+        final Iterator<T> it = iterable.iterator();
+        return count(it, pred);
+    }
+
+    public static <T> int count(Iterator<T> iterator, Predicate<T> pred) {
+        int counter = 0;
+        while (iterator.hasNext()) {
+            T current = iterator.next();
+            if (pred.predicate(current)) {
+                counter++;
+            }
+        }
+        return counter;
+    }
 
     // find dapat digunakan untuk mencari seat yang tersedia (see Payment)
 //    public static <T> T find(Iterator<T> iterator, T value) {

@@ -1,6 +1,7 @@
 package auliaAnugrahAzizJBusRD;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -84,12 +85,13 @@ public class Schedule
 
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        int counter = 25;
+        ArrayList<Boolean> temp = new ArrayList<>();
         for(String seat : this.seatAvailability.keySet()) {
-            if(seatAvailability.get(seat)) {
-                counter--;
-            }
+            temp.add(seatAvailability.get(seat));
         }
-        return "Schedule: " + sdf.format(this.departureSchedule) + "\tOccupied: " + Integer.toString(counter) + "/25";
+
+        int result = Algorithm.count(temp, false);
+
+        return "Schedule: " + sdf.format(this.departureSchedule) + "\tOccupied: " + Integer.toString(result) + "/25";
     }
 }
