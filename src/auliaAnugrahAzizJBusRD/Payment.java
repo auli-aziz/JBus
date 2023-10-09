@@ -1,4 +1,4 @@
-package AuliaAnugrahAzizJBusRD;
+package auliaAnugrahAzizJBusRD;
 
 import java.sql.Timestamp;
 import java.text.*;

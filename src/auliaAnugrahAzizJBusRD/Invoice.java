@@ -1,4 +1,4 @@
-package AuliaAnugrahAzizJBusRD;
+package auliaAnugrahAzizJBusRD;
 
 
 /**
@@ -8,7 +8,6 @@ package AuliaAnugrahAzizJBusRD;
  * @version (a version number or a date)
  */
 
-import java.util.Date;
 import java.sql.Timestamp;
 
 public class Invoice extends Serializable

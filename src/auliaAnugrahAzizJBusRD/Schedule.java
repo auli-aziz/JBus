@@ -1,8 +1,7 @@
-package AuliaAnugrahAzizJBusRD;
+package auliaAnugrahAzizJBusRD;
 
 import java.sql.Timestamp;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.text.SimpleDateFormat;
 
