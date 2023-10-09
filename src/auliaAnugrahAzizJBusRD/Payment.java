@@ -85,7 +85,6 @@ public class Payment extends Invoice
     // yang ini melakukan booking utk 1 seat
     public static boolean makeBooking(Timestamp departureSchedule, String seat, Bus bus) {
         for(Schedule s : bus.schedules) {
-//            System.out.println(s.departureSchedule.equals(departureSchedule) + " "+ s.isSeatAvailable(seat));
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
                 s.bookSeat(seat);
                 return true;
@@ -97,7 +96,6 @@ public class Payment extends Invoice
     // yang ini melakukan booking utk 1 bus
     public static boolean makeBooking(Timestamp departureSchedule, List<String> seatList, Bus bus) {
         for(Schedule s : bus.schedules) {
-//            System.out.println(s.departureSchedule.equals(departureSchedule) + " "+ s.isSeatAvailable(seatList));
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seatList)) {
                 s.bookSeat(seatList);
                 return true;

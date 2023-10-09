@@ -63,9 +63,7 @@ public class Schedule
     public boolean isSeatAvailable(List<String> seatList) {
         boolean status = false;
         for(String seat : seatList) {
-            String current = seat;
-//            System.out.println(current);
-            if(seatAvailability.getOrDefault(current, false)) {
+            if(seatAvailability.getOrDefault(seat, false)) {
                 status = true;
             }
         }
