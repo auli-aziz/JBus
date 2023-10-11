@@ -20,6 +20,6 @@ public class Station extends Serializable
     }
     
     public String toString() {
-        return "\tId: " + Integer.toString(this.id) + "\tStationName: " + this.stationName + "\tCity " + this.city + "\tAddress: " + this.address;
+        return " Station Id: " + Integer.toString(this.id) + "\tStation Name: " + this.stationName + "City: " + this.city + " Address: " + this.address;
     }
 }

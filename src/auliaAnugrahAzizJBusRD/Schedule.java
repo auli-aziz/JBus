@@ -86,12 +86,14 @@ public class Schedule
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ArrayList<Boolean> temp = new ArrayList<>();
+        int totalCapacity = 0;
         for(String seat : this.seatAvailability.keySet()) {
             temp.add(seatAvailability.get(seat));
+            totalCapacity++;
         }
 
         int result = Algorithm.count(temp, false);
 
-        return "Schedule: " + sdf.format(this.departureSchedule) + "\tOccupied: " + Integer.toString(result) + "/25";
+        return "Schedule: " + sdf.format(this.departureSchedule) + "\tOccupied: " + Integer.toString(result) + "/" + Integer.toString(totalCapacity);
     }
 }
