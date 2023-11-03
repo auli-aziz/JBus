@@ -141,7 +141,7 @@ public class JBus
 //                temp.add(b);
 //            }
 //        }
-        Predicate<Bus> predBus = (b) -> b.departure.city == departure && b.arrival.city == arrival;
+        Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure) && b.arrival.city.equals(arrival);
         return Algorithm.paginate(buses, page, pageSize, predBus);
     }
 
