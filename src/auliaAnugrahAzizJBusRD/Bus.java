@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * @author Aulia Anugrah Aziz
  * @version (a version number or a date)
  */
-public class Bus extends Serializable implements FileParser
+public class Bus extends Serializable
 {
     public int capacity;
     public Facility facility;
@@ -39,8 +39,14 @@ public class Bus extends Serializable implements FileParser
     public String toString() {
         return "Bus ID: " + this.id + "\tName: " + this.name + "\tFacility: " + this.facility + this.price + "\tCapacity: " + this.capacity + "\tBusType: " + this.busType + "\tCity: " + this.city + this.departure + this.arrival;
     }
-    
+
+    // TODO: Memastikan addSchedule method sudah benar
     public void addSchedule(Timestamp calendar) {
+        for(Schedule s : this.schedules) {
+            if(s.departureSchedule.equals(calendar)) {
+                throw new IllegalArgumentException("Schedule with the same timestamp already exists.");
+            }
+        }
         this.schedules.add(new Schedule(calendar, capacity));
     }
     

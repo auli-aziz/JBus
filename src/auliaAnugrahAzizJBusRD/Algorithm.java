@@ -81,76 +81,76 @@ public class Algorithm {
     }
 
     // find dapat digunakan untuk mencari seat yang tersedia (see Payment)
-//    public static <T> T find(Iterator<T> iterator, T value) {
-//        final Predicate<T> pred = value::equals;
-//        return find(iterator, pred);
-//    }
-//
-//    public static <T> T find(T[] array, T value) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return find(it, value);
-//    }
-//
-//    public static <T> T find(T[] array, Predicate<T> pred) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return find(it, pred);
-//    }
-//
-//    public static <T> T find(Iterable<T> iterable, T value) {
-//        final Iterator<T> it = iterable.iterator();
-//        return find(it, value);
-//    }
-//
-//    public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
-//        final Iterator<T> it = iterable.iterator();
-//        return find(it, pred);
-//    }
-//
-//    public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
-//        while(iterator.hasNext()) {
-//            T current = iterator.next();
-//            if(pred.predicate(current)) {
-//                return current;
-//            }
-//        }
-//        return null;
-//    }
+    public static <T> T find(Iterator<T> iterator, T value) {
+        final Predicate<T> pred = value::equals;
+        return find(iterator, pred);
+    }
 
-//    public static <T> List<T> collect(Iterator<T> iterator, T value) {
-//        final Predicate<T> pred = value::equals; // kode ini mencek bila value == current
-//        return collect(iterator, pred);
-//    }
-//
-//    public static <T> List<T> collect(T[] array, T value) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return collect(it, value);
-//    }
-//
-//    public static <T> List<T> collect(T[] array, Predicate<T> pred) {
-//        final Iterator<T> it = Arrays.stream(array).iterator();
-//        return collect(it, pred);
-//    }
-//
-//    public static <T> List<T> collect(Iterable<T> iterable, T value) {
-//        final Iterator<T> it = iterable.iterator();
-//        return collect(it, value);
-//    }
-//
-//    public static <T> List<T> collect(Iterable<T> iterable, Predicate<T> pred) {
-//        final Iterator<T> it = iterable.iterator();
-//        return collect(it, pred);
-//    }
-//
-//    public static <T> List<T> collect(Iterator<T> iterator, Predicate<T> pred) {
-//        List<T> list = new ArrayList<T>();
-//        while(iterator.hasNext()) {
-//            T current = iterator.next();
-//            if(pred.predicate(current)) {
-//                list.add(current);
-//            }
-//        }
-//        return list;
-//    }
+    public static <T> T find(T[] array, T value) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return find(it, value);
+    }
+
+    public static <T> T find(T[] array, Predicate<T> pred) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return find(it, pred);
+    }
+
+    public static <T> T find(Iterable<T> iterable, T value) {
+        final Iterator<T> it = iterable.iterator();
+        return find(it, value);
+    }
+
+    public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
+        final Iterator<T> it = iterable.iterator();
+        return find(it, pred);
+    }
+
+    public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
+        while(iterator.hasNext()) {
+            T current = iterator.next();
+            if(pred.predicate(current)) {
+                return current;
+            }
+        }
+        return null;
+    }
+
+    public static <T> List<T> collect(Iterator<T> iterator, T value) {
+        final Predicate<T> pred = value::equals; // kode ini mencek bila value == current
+        return collect(iterator, pred);
+    }
+
+    public static <T> List<T> collect(T[] array, T value) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return collect(it, value);
+    }
+
+    public static <T> List<T> collect(T[] array, Predicate<T> pred) {
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return collect(it, pred);
+    }
+
+    public static <T> List<T> collect(Iterable<T> iterable, T value) {
+        final Iterator<T> it = iterable.iterator();
+        return collect(it, value);
+    }
+
+    public static <T> List<T> collect(Iterable<T> iterable, Predicate<T> pred) {
+        final Iterator<T> it = iterable.iterator();
+        return collect(it, pred);
+    }
+
+    public static <T> List<T> collect(Iterator<T> iterator, Predicate<T> pred) {
+        List<T> list = new ArrayList<T>();
+        while(iterator.hasNext()) {
+            T current = iterator.next();
+            if(pred.predicate(current)) {
+                list.add(current);
+            }
+        }
+        return list;
+    }
 
     public static <T> List<T> paginate(T[] array, int page, int pageSize, Predicate<T> pred) {
         final Iterator<T> it = Arrays.stream(array).iterator();

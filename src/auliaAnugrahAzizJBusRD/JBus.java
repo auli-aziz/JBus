@@ -23,20 +23,33 @@ public class JBus
     public static void main(String[] args) {
 
         // TP Modul 6
-        String filepath = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\station.json";
-        Gson gson = new Gson();
+//        String filepath = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\station.json";
+//        Gson gson = new Gson();
+//
+//        try {
+//            BufferedReader buffer = new BufferedReader(new FileReader(filepath));
+//            List<Station> stationjson = gson.fromJson(buffer, new TypeToken<List<Station>>() {}.getType());
+//            stationjson.forEach(e -> System.out.println(e.toString()));
+//            System.out.println();
+//            buffer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            BufferedReader buffer = new BufferedReader(new FileReader(filepath));
-            List<Station> stationjson = gson.fromJson(buffer, new TypeToken<List<Station>>() {}.getType());
-            stationjson.forEach(e -> System.out.println(e.toString()));
-            System.out.println();
-            buffer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        try{
+            String filepath2 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\buses_CS.json";
+            JsonTable<Bus> busList = new JsonTable<>(Bus.class, filepath2);
+//            List<Bus> filteredBus = filterByDeparture(busList, City.JAKARTA, 1, 10);
+//            List<Bus> filteredBus = filterByPrice(busList, 100000, 500000000);
+//            System.out.println(filterBusId(busList, 155));
+            List<Bus> filteredBus = filterByDepartureAndArrival(busList, City.JAKARTA, City.SURABAYA, 0, 3);
+            filteredBus.forEach(bus -> System.out.println(bus.toString()));
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
 
 //        // PT Modul 5
+
 //        // Tes Pagination
 //        Bus b = createBus();
 //        List<Timestamp> listOfSchedules = new ArrayList<>();
@@ -84,6 +97,54 @@ public class JBus
         Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25, BusType.REGULER, City.BANDUNG, new Station("Depok Terminal", City.DEPOK, "Jl. Margonda Raya"), new Station("Halte UI", City.JAKARTA, "Universitas Indonesia"));
         return bus;
     }
+
+    // TODO: Memastikan filterByDeparture method sudah benar
+    public static List<Bus> filterByDeparture(List<Bus> buses, City departure, int page, int pageSize) {
+        List<Bus> listOfBuses = new ArrayList<>();
+        for(Bus b : buses) {
+            if(b.departure.city == departure) {
+                listOfBuses.add(b);
+            }
+        }
+//        Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure);
+        return Algorithm.paginate(listOfBuses, page, pageSize, t -> true); // data yang sudah difilter (yang sesuai dengan departure)
+    }
+
+    public static List<Bus> filterByPrice(List<Bus> buses, int min, int max) {
+//        List<Bus> temp = new ArrayList<>();
+//        for(Bus b : buses) {
+//            if(b.price.price >= min && b.price.price <= max) {
+//                temp.add(b);
+//            }
+//        }
+//        return temp;
+        Predicate<Bus> predBus = (b) -> b.price.price >= min && b.price.price <= max;
+        return Algorithm.collect(buses, predBus);
+    }
+
+    public static Bus filterBusId(List<Bus> buses, int id) {
+//        Bus resultBus = null;
+//        for(Bus b : buses) {
+//            if(b.id == id) {
+//                resultBus = b;
+//            }
+//        }
+//        return resultBus;
+        Predicate<Bus> predBus = (b) -> b.id == id;
+        return Algorithm.find(buses, predBus);
+    }
+
+    public static List<Bus> filterByDepartureAndArrival(List<Bus> buses, City departure, City arrival, int page, int pageSize) {
+//        List<Bus> temp = new ArrayList<>();
+//        for(Bus b : buses) {
+//            if(b.departure.city == departure && b.arrival.city == arrival) {
+//                temp.add(b);
+//            }
+//        }
+        Predicate<Bus> predBus = (b) -> b.departure.city == departure && b.arrival.city == arrival;
+        return Algorithm.paginate(buses, page, pageSize, predBus);
+    }
+
 //    private static void testExist(Integer[] t) {
 //        int valueToCheck = 67;
 //        boolean result3 = Algorithm.exists(t, valueToCheck);
