@@ -1,5 +1,6 @@
 package auliaAnugrahAzizJBusRD;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Timestamp;
@@ -20,7 +21,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class JBus
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         // TP Modul 6
 //        String filepath = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\station.json";
@@ -36,17 +37,50 @@ public class JBus
 //            e.printStackTrace();
 //        }
 
-        try{
-            String filepath2 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\buses_CS.json";
-            JsonTable<Bus> busList = new JsonTable<>(Bus.class, filepath2);
-//            List<Bus> filteredBus = filterByDeparture(busList, City.JAKARTA, 1, 10);
-//            List<Bus> filteredBus = filterByPrice(busList, 100000, 500000000);
-//            System.out.println(filterBusId(busList, 155));
-            List<Bus> filteredBus = filterByDepartureAndArrival(busList, City.JAKARTA, City.SURABAYA, 0, 3);
-            filteredBus.forEach(bus -> System.out.println(bus.toString()));
-        } catch (Throwable t) {
-            t.printStackTrace();
+//        // CS Modul 6
+//        try{
+//            String filepath2 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\buses_CS.json";
+//            JsonTable<Bus> busList = new JsonTable<>(Bus.class, filepath2);
+////            List<Bus> filteredBus = filterByDeparture(busList, City.JAKARTA, 1, 10);
+////            List<Bus> filteredBus = filterByPrice(busList, 100000, 500000000);
+////            System.out.println(filterBusId(busList, 155));
+//            List<Bus> filteredBus = filterByDepartureAndArrival(busList, City.JAKARTA, City.SURABAYA, 0, 3);
+//            filteredBus.forEach(bus -> System.out.println(bus.toString()));
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+
+        // PT Modul 6
+        String filepath3 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\accountDatabase.json";
+        JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath3);
+
+        // Membuat beberapa objek Account dan menambahkannya ke JsonTable
+        Account account1 = new Account("user1", "user1@example.com", "testing");
+        Account account2 = new Account("user2", "user2@example.com", "testing");
+        tableAccount.add(account1);
+        tableAccount.add(account2);
+
+        // Menulis data JsonTable ke file "accountDatabase.json"
+        try (
+            FileWriter fileWriter = new FileWriter(filepath3)) {
+
+            Gson gson = new Gson();
+            gson.toJson(tableAccount, fileWriter);
+            for(Account a : tableAccount) {
+                System.out.println("Account ID:" + a.id + " Name: " + a.name + " Email: " + a.email + " Password: " + a.password);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        Bus bus = createBus();
+        bus.schedules.forEach(e -> e.printSchedule(e));
+        for(int i = 0; i < 10; i++) {
+            BookingThread thread = new BookingThread("Thread " + i, bus, Timestamp.valueOf("2023-07-27 19:00:00"));
+        }
+        Thread.sleep(1000);
+        bus.schedules.forEach(e -> e.printSchedule(e));
+
 
 //        // PT Modul 5
 
@@ -95,6 +129,8 @@ public class JBus
     public static Bus createBus() {
         Price price = new Price(750000, 5);
         Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25, BusType.REGULER, City.BANDUNG, new Station("Depok Terminal", City.DEPOK, "Jl. Margonda Raya"), new Station("Halte UI", City.JAKARTA, "Universitas Indonesia"));
+        Timestamp timestamp = Timestamp.valueOf("2023-07-27 19:00:00");
+        bus.addSchedule(timestamp);
         return bus;
     }
 
