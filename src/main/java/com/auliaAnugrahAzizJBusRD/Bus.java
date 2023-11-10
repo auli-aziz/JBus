@@ -1,5 +1,7 @@
 package com.auliaAnugrahAzizJBusRD;
 
+import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Timestamp;

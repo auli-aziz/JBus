@@ -1,4 +1,4 @@
-package com.auliaAnugrahAzizJBusRD;
+package com.auliaAnugrahAzizJBusRD.dbjson;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

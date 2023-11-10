@@ -1,6 +1,8 @@
 package com.auliaAnugrahAzizJBusRD;
 
 
+import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
+
 /**
  * Write a description of class Review here.
  *

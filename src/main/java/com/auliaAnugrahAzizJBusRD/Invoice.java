@@ -8,6 +8,8 @@ package com.auliaAnugrahAzizJBusRD;
  * @version (a version number or a date)
  */
 
+import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
+
 import java.sql.Timestamp;
 
 public class Invoice extends Serializable

@@ -1,5 +1,7 @@
 package com.auliaAnugrahAzizJBusRD;
 
+import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
+
 import java.util.regex.*;
 
 /**

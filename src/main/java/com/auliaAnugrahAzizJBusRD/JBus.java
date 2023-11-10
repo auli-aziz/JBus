@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+
+import com.auliaAnugrahAzizJBusRD.dbjson.JsonDBEngine;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,110 +25,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JBus
 {
-    public static void main(String[] args) throws IOException, InterruptedException {
-
+    public static void main(String[] args)
+    {
+        JsonDBEngine.Run(JBus.class);
         SpringApplication.run(JBus.class, args);
-        // TP Modul 6
-//        String filepath = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\station.json";
-//        Gson gson = new Gson();
-//
-//        try {
-//            BufferedReader buffer = new BufferedReader(new FileReader(filepath));
-//            List<Station> stationjson = gson.fromJson(buffer, new TypeToken<List<Station>>() {}.getType());
-//            stationjson.forEach(e -> System.out.println(e.toString()));
-//            System.out.println();
-//            buffer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        // CS Modul 6
-//        try{
-//            String filepath2 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\buses_CS.json";
-//            JsonTable<Bus> busList = new JsonTable<>(Bus.class, filepath2);
-////            List<Bus> filteredBus = filterByDeparture(busList, City.JAKARTA, 1, 10);
-////            List<Bus> filteredBus = filterByPrice(busList, 100000, 500000000);
-////            System.out.println(filterBusId(busList, 155));
-//            List<Bus> filteredBus = filterByDepartureAndArrival(busList, City.JAKARTA, City.SURABAYA, 0, 3);
-//            filteredBus.forEach(bus -> System.out.println(bus.toString()));
-//        } catch (Throwable t) {
-//            t.printStackTrace();
-//        }
-
-//        // PT Modul 6
-//        String filepath3 = "C:\\Users\\Aziz\\Documents\\Kuliah\\Semester 3\\OOP\\Java\\JBus\\data\\accountDatabase.json";
-//        JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath3);
-//
-//        // Membuat beberapa objek Account dan menambahkannya ke JsonTable
-//        Account account1 = new Account("user1", "user1@example.com", "testing");
-//        Account account2 = new Account("user2", "user2@example.com", "testing");
-//        tableAccount.add(account1);
-//        tableAccount.add(account2);
-//
-//        // Menulis data JsonTable ke file "accountDatabase.json"
-//        try (
-//            FileWriter fileWriter = new FileWriter(filepath3)) {
-//
-//            Gson gson = new Gson();
-//            gson.toJson(tableAccount, fileWriter);
-//            for(Account a : tableAccount) {
-//                System.out.println("Account ID:" + a.id + " Name: " + a.name + " Email: " + a.email + " Password: " + a.password);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Bus bus = createBus();
-//        bus.schedules.forEach(e -> e.printSchedule(e));
-//        for(int i = 0; i < 10; i++) {
-//            BookingThread thread = new BookingThread("Thread " + i, bus, Timestamp.valueOf("2023-07-27 19:00:00"));
-//        }
-//        Thread.sleep(1000);
-//        bus.schedules.forEach(e -> e.printSchedule(e));
-
-
-//        // PT Modul 5
-
-//        // Tes Pagination
-//        Bus b = createBus();
-//        List<Timestamp> listOfSchedules = new ArrayList<>();
-//        listOfSchedules.add(Timestamp.valueOf("2023-7-18 15:00:00"));
-//        listOfSchedules.add(Timestamp.valueOf("2023-7-20 12:00:00"));
-//        listOfSchedules.add(Timestamp.valueOf("2023-7-22 10:00:00"));
-//        listOfSchedules.add(Timestamp.valueOf("2023-7-26 12:00:00"));
-//
-//        listOfSchedules.forEach(b::addSchedule);
-//        System.out.println("Page 1");
-//        Algorithm.paginate(b.schedules, 0, 3, t -> true).forEach(System.out::println);
-//        System.out.println("=====================================================");
-//        System.out.println("Page 2");
-//        Algorithm.paginate(b.schedules, 1, 3, t -> true).forEach(System.out::println);
-//        System.out.println("=====================================================");
-//
-//        // Tes Booking
-//        String msgSuccess = "Booking Success!";
-//        String msgFailed = "Booking Failed";
-//        // invalid date, valid seat = Booking Failed
-//        Timestamp t1 = Timestamp.valueOf("2023-7-19 15:00:00");
-//        System.out.println("\nMake booking at July 19, 2023 15:00:00 Seats: RD17 RD18");
-//        System.out.println(Payment.makeBooking(t1, List.of("RD17", "RD18"), b)? msgSuccess : msgFailed);
-//        // valid date, invalid seat = Booking Failed
-//        Timestamp t2 = Timestamp.valueOf("2023-7-18 15:00:00");
-//        System.out.println("Make booking at July 18, 2023 15:00:00 Seat RD26");
-//        System.out.println(Payment.makeBooking(t2, "RD26", b)? msgSuccess : msgFailed);
-//        // valid date, valid seat = Booking Success
-//        System.out.println("Make booking at July 18, 2023 15:00:00 Seats: RD07 RD08");
-//        System.out.println(Payment.makeBooking(t2, List.of("RD07", "RD08"), b)? msgSuccess : msgFailed);
-//        // valid date, valid seat = Booking Success
-//        Timestamp t3 = Timestamp.valueOf("2023-7-20 12:00:00");
-//        System.out.println("Make booking at July 20, 2023 12:00:00 Seats: RD01 RD02");
-//        System.out.println(Payment.makeBooking(t3, List.of("RD01", "RD02"), b)? msgSuccess : msgFailed);
-//        // valid date, book the same seat = Booking Failed
-//        System.out.println("Make booking at July 20, 2023 12:00:00 Seat RD1");
-//        System.out.println(Payment.makeBooking(t3, "RD01", b)? msgSuccess : msgFailed);
-//        // check if the data changed
-//        System.out.println("\nUpdated Schedule");
-//        Algorithm.paginate(b.schedules, 0, 4, t-> true).forEach(System.out::println);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
     }
 
     public static Bus createBus() {
