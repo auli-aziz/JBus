@@ -1,1 +1,1 @@
-[{"capacity":20,"facility":["LUNCH","AC"],"name":"TestBus","price":{"rebate":0.0,"price":100000.0},"departure":{"city":"DEPOK","stationName":"Terminal Jatijajar","address":"Jl. Jatijajar 1 No.04, Jatijajar, Kec. Tapos, Jawa Barat","id":0},"arrival":{"city":"JAKARTA","stationName":"Terminal Manggarai","address":"RT.2/RW.8, Pasar Manggis, Kota Jakarta Selatan","id":1},"busType":"REGULER","schedules":[],"accountId":6,"id":0}]
+[{"name":"TestBus","balance":0.0,"id":0}]

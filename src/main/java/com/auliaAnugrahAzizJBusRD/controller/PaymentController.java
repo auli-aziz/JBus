@@ -21,12 +21,12 @@ public class PaymentController implements BasicGetController<Payment> {
     @RequestMapping(value="/makeBooking", method= RequestMethod.POST)
     public BaseResponse<Payment> makeBooking(
             @RequestParam int buyerId,
-            @RequestParam int renterid,
+            @RequestParam int renterId,
             @RequestParam int busId,
             @RequestParam List<String> busSeats,
             @RequestParam String departureDate
     ) {
-        Predicate<Account> predAccount = a -> a.id == buyerId && a.company.id == renterid;
+        Predicate<Account> predAccount = a -> a.id == buyerId && a.company.id == renterId;
         Predicate<Bus> predBus = b -> b.id == busId;
         boolean exist =
         Algorithm.exists(AccountController.accountTable, predAccount) &&
