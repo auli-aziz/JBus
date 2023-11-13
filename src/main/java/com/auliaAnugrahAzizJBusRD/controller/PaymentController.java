@@ -26,7 +26,7 @@ public class PaymentController implements BasicGetController<Payment> {
             @RequestParam List<String> busSeats,
             @RequestParam String departureDate
     ) {
-        Predicate<Account> predAccount = a -> a.id == buyerId;
+        Predicate<Account> predAccount = a -> a.id == buyerId && a.company.id == renterid;
         Predicate<Bus> predBus = b -> b.id == busId;
         boolean exist =
         Algorithm.exists(AccountController.accountTable, predAccount) &&
