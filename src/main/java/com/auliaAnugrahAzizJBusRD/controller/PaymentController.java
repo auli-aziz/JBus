@@ -39,6 +39,8 @@ public class PaymentController implements BasicGetController<Payment> {
             if(acc.balance > bus.price.price) {
                 Predicate<Payment> predPayment = p -> p.departureDate.toString() == departureDate;
                 payment = Algorithm.find(getJsonTable(), predPayment);
+            } else {
+                return new BaseResponse<>(false, "Kekurangan saldo", payment);
             }
         }
 
