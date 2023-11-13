@@ -35,7 +35,7 @@ public class BusController implements BasicGetController<Bus> {
     ) {
         Predicate<Account> predAcc = a -> a.id == accountId && a.company != null;
         boolean valid1 = Algorithm.exists(AccountController.accountTable, predAcc);
-        Predicate<Station> predStation = s -> s.id == stationDepartureId && s.id == stationArrivalId;
+        Predicate<Station> predStation = s -> s.id == stationDepartureId || s.id == stationArrivalId;
         boolean valid2 = Algorithm.exists(StationController.stationTable, predStation);
 
         if(valid1 && valid2) {
