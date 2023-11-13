@@ -33,16 +33,15 @@ public class BusController implements BasicGetController<Bus> {
             @RequestParam int stationDepartureId,
             @RequestParam int stationArrivalId
     ) {
-
         Predicate<Account> predAcc = a -> a.id == accountId && a.company != null;
         boolean valid1 = Algorithm.exists(AccountController.accountTable, predAcc);
-        Predicate<Bus> predBus = b -> b.departure.id == stationDepartureId && b.arrival.id == stationArrivalId;
-        boolean valid2 = Algorithm.exists(BusController.busTable, predBus);
+        Predicate<Station> predStation = s -> s.id == stationDepartureId && s.id == stationArrivalId;
+        boolean valid2 = Algorithm.exists(StationController.stationTable, predStation);
 
         if(valid1 && valid2) {
-            Bus b = Algorithm.find(getJsonTable(), predBus);
-            b.price.price = price;
-            Bus bus = new Bus(name, facilities, b.price, capacity, busType, b.departure, b.arrival, accountId);
+            Predicate<Station> DepStation = s -> s.id == stationDepartureId;
+            Predicate<Station> ArrStation = s -> s.id == stationArrivalId;
+            Bus bus = new Bus(name, facilities, new Price(price), capacity, busType, Algorithm.find(StationController.stationTable, DepStation), Algorithm.find(StationController.stationTable, ArrStation), accountId);
             busTable.add(bus);
             return new BaseResponse<>(true, "Berhasil menambahkan bus", bus);
         } else {
