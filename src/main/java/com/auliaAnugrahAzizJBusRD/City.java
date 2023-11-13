@@ -9,5 +9,15 @@ package com.auliaAnugrahAzizJBusRD;
  */
 public enum City
 {
-    JAKARTA, BANDUNG, DEPOK, SEMARANG, SURABAYA, BALI, YOGYAKARTA;
+    JAKARTA,
+    DEPOK,
+    BANDUNG,
+    YOGYAKARTA,
+    SEMARANG,
+    SURABAYA,
+    BALI,
+    TANGERANG,
+    BOGOR,
+    BEKASI,
+    SUKABUMI;
 }
