@@ -5,6 +5,7 @@ import com.auliaAnugrahAzizJBusRD.dbjson.JsonTable;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonAutowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -26,19 +27,26 @@ public class PaymentController implements BasicGetController<Payment> {
             @RequestParam List<String> busSeats,
             @RequestParam String departureDate
     ) {
-        Predicate<Account> predAccount = a -> a.id == buyerId && a.company.id == renterId;
+        Timestamp timestamp = Timestamp.valueOf(departureDate);
+        Predicate<Account> predAccount = a -> a.id == buyerId;
         Predicate<Bus> predBus = b -> b.id == busId;
-        boolean exist =
-        Algorithm.exists(AccountController.accountTable, predAccount) &&
-        Algorithm.exists(BusController.busTable, predBus);
-        Payment payment = null;
-        if(exist) {
-            Account acc = Algorithm.find(AccountController.accountTable, predAccount);
-            Bus bus = Algorithm.find(BusController.busTable, predBus);
 
-            if(acc.balance > bus.price.price) {
-                Predicate<Payment> predPayment = p -> p.departureDate.toString() == departureDate;
-                payment = Algorithm.find(getJsonTable(), predPayment);
+        Account acc = Algorithm.find(AccountController.accountTable, predAccount);
+        Bus bus = Algorithm.find(BusController.busTable, predBus);
+
+        boolean statusSched = false;
+
+        for(int i = 0; i < bus.schedules.size(); i++) {
+            if(bus.schedules.get(i).departureSchedule.equals(timestamp)) {
+                System.out.println(bus.schedules.get(i).departureSchedule);
+                statusSched = true;
+            }
+        }
+
+        Payment payment = null;
+        if(acc != null && bus != null && statusSched) {
+            if(acc.balance >= bus.price.price * busSeats.size()) {
+                payment = new Payment(buyerId, renterId, busId, busSeats, timestamp);
             } else {
                 return new BaseResponse<>(false, "Kekurangan saldo", payment);
             }
@@ -47,6 +55,7 @@ public class PaymentController implements BasicGetController<Payment> {
         if(payment == null) {
             return new BaseResponse<>(false, "Gagal membuat booking", payment);
         } else {
+            payment.makeBooking(timestamp, busSeats, bus);
             payment.status = Invoice.PaymentStatus.WAITING;
             paymentTable.add(payment);
             return new BaseResponse<>(true, "Berhasil membuat booking", payment);

@@ -122,21 +122,15 @@ public class AccountController implements BasicGetController<Account>
             @RequestParam String phoneNumber
     ) {
         boolean status = false;
-        Renter renter;
+        Renter renter = new Renter(companyName, phoneNumber, address);
         for(Account a : getJsonTable()) {
             if(a.id == id && a.company == null) {
-                renter = new Renter(companyName, address, phoneNumber);
                 a.company = renter;
                 status = true;
+                return new BaseResponse<>(true, "Berhasil membuat renter", renter);
             }
         }
-
-        renter = new Renter(companyName, address, phoneNumber);
-        if(status) {
-            return new BaseResponse<>(true, "Berhasil membuat renter", renter);
-        } else {
-            return new BaseResponse<>(false, "Gagal membuat renter tidak ditemukan id", renter);
-        }
+        return new BaseResponse<>(false, "Gagal membuat renter tidak ditemukan id", renter);
     }
 
     @PostMapping("/{id}/topUp")
@@ -144,11 +138,16 @@ public class AccountController implements BasicGetController<Account>
             @PathVariable int id,
             @RequestParam double amount
     ) {
-        for(Account a : getJsonTable()) {
+        for(Account a : this.getJsonTable()) {
             if(a.id == id) {
-                return new BaseResponse<>(a.topUp(amount), "Berhasil Top Up", amount);
+                boolean status = a.topUp(amount);
+                if(status) {
+                    return new BaseResponse<>(status, "Berhasil Top Up", amount);
+                } else {
+                    return new BaseResponse<>(status, "Gagal Top Up", amount);
+                }
             }
         }
-        return new BaseResponse<>(false, "Gagal Top Up", amount);
+        return new BaseResponse<>(false, "Account not found", amount);
     }
 }

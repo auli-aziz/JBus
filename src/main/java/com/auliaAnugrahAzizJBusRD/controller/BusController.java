@@ -55,13 +55,11 @@ public class BusController implements BasicGetController<Bus> {
             @RequestParam String time
     ) {
         Predicate<Bus> pred = b -> b.id == busId;
-        boolean exist = Algorithm.exists(getJsonTable(), pred);
-        if(exist) {
-            for(Bus b : getJsonTable()) {
-                Timestamp timestamp = Timestamp.valueOf(time);
-                b.addSchedule(timestamp);
-                return new BaseResponse<>(true, "Berhasil membuat schedule", b);
-            }
+        Bus b = Algorithm.find(getJsonTable(), pred);
+        if(b != null) {
+            Timestamp timestamp = Timestamp.valueOf(time);
+            b.addSchedule(timestamp);
+            return new BaseResponse<>(true, "Berhasil membuat schedule", b);
         }
         return new BaseResponse<>(false, "Gagal membuat schedule", null);
     }

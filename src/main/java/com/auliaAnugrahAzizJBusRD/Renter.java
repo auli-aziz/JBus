@@ -35,8 +35,8 @@ public class Renter extends Serializable
     public Renter(String companyName, String phoneNumber, String address) {
         super();
         this.companyName = companyName;
-        this.address = address;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public boolean validate() {
