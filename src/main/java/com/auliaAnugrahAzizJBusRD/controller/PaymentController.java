@@ -19,7 +19,7 @@ public class PaymentController implements BasicGetController<Payment> {
         return this.paymentTable;
     }
 
-    @RequestMapping(value="/makeBooking", method= RequestMethod.POST)
+    @RequestMapping(value="/makeBooking", method=RequestMethod.POST)
     public BaseResponse<Payment> makeBooking(
             @RequestParam int buyerId,
             @RequestParam int renterId,
@@ -67,7 +67,7 @@ public class PaymentController implements BasicGetController<Payment> {
         Predicate<Payment> pred = p -> p.id == id;
         Payment payment = null;
         if(Algorithm.exists(getJsonTable(), pred)) {
-             payment = Algorithm.find(getJsonTable(), pred);
+             payment = Algorithm.find(this.paymentTable, pred);
              payment.status = Invoice.PaymentStatus.SUCCESS;
             return new BaseResponse<>(true, "Sukses menerima booking", payment);
         }
@@ -79,7 +79,7 @@ public class PaymentController implements BasicGetController<Payment> {
         Predicate<Payment> pred = p -> p.id == id;
         Payment payment = null;
         if(Algorithm.exists(getJsonTable(), pred)) {
-            payment = Algorithm.find(getJsonTable(), pred);
+            payment = Algorithm.find(this.paymentTable, pred);
             payment.status = Invoice.PaymentStatus.FAILED;
             return new BaseResponse<>(true, "Sukses meng-cancel booking", payment);
         }

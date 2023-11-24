@@ -2,6 +2,7 @@ package com.auliaAnugrahAzizJBusRD.controller;
 
 import com.auliaAnugrahAzizJBusRD.Account;
 import com.auliaAnugrahAzizJBusRD.Algorithm;
+import com.auliaAnugrahAzizJBusRD.Predicate;
 import com.auliaAnugrahAzizJBusRD.Renter;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonAutowired;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonTable;
@@ -47,12 +48,17 @@ public class AccountController implements BasicGetController<Account>
                     @RequestParam String password
             )
     {
-        Account account = new Account(name, email, password);
-        String generatedPassword = null;
-        boolean notValid = name.isBlank() || email.isBlank() || password.isBlank() || !account.validate() || Algorithm.exists(getJsonTable(), account);
-        if(notValid) {
-            return new BaseResponse<>(false, "Gagal register", null);
+        if(name.isBlank() || email.isBlank() || password.isBlank()) {
+            return new BaseResponse<>(false, "Gagal register, masukkan semua data", null);
         }
+
+        for(int i = 0; i < this.accountTable.size(); i++) {
+            if(this.accountTable.get(i).email.equals(email)) {
+                return new BaseResponse<>(false, "Gagal register, email sudah terdaftar", null);
+            }
+        }
+
+        String generatedPassword = null;
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -68,9 +74,15 @@ public class AccountController implements BasicGetController<Account>
             e.printStackTrace();
         }
 
-        Account generatedAccount= new Account(name, email, generatedPassword);
-        accountTable.add(generatedAccount);
-        return new BaseResponse<>(true, "Berhasil register", generatedAccount);
+        Account account = new Account(name, email, password);
+        if(!account.validate()) {
+            account = null;
+            return new BaseResponse<>(false, "Gagal register, masukkan password atau email sesuai syarat", null);
+        }
+
+        account.password = generatedPassword;
+        accountTable.add(account);
+        return new BaseResponse<>(true, "Berhasil register", account);
     }
 
     @PostMapping("/login")
@@ -98,20 +110,13 @@ public class AccountController implements BasicGetController<Account>
             e.printStackTrace();
         }
 
-        for(Account a : getJsonTable()) {
+        for(Account a : this.accountTable) {
             if(a.email.equals(email) && a.password.equals(generatedPassword)) {
-                foundedName = a.name;
-                foundedEmail = a.email;
-                foundedPassword = a.password;
+                return new BaseResponse<>(true, "Welcome to JBus!", a);
             }
         }
 
-        Account account = new Account(foundedName, foundedEmail, foundedPassword);
-        if(foundedName.equals(null) && foundedEmail.equals(null) && foundedPassword.equals(null)) {
-            return new BaseResponse<>(false, "Gagal login", account);
-        } else {
-            return new BaseResponse<>(true, "Berhasil login", account);
-        }
+        return new BaseResponse<>(false, "Gagal login", null);
     }
 
     @PostMapping("/{id}/registerRenter")
@@ -121,12 +126,10 @@ public class AccountController implements BasicGetController<Account>
             @RequestParam String address,
             @RequestParam String phoneNumber
     ) {
-        boolean status = false;
         Renter renter = new Renter(companyName, phoneNumber, address);
-        for(Account a : getJsonTable()) {
+        for(Account a : this.accountTable) {
             if(a.id == id && a.company == null) {
                 a.company = renter;
-                status = true;
                 return new BaseResponse<>(true, "Berhasil membuat renter", renter);
             }
         }
@@ -138,15 +141,17 @@ public class AccountController implements BasicGetController<Account>
             @PathVariable int id,
             @RequestParam double amount
     ) {
-        for(Account a : this.getJsonTable()) {
+        int counter = 0;
+        for(Account a : this.accountTable) {
             if(a.id == id) {
                 boolean status = a.topUp(amount);
                 if(status) {
-                    return new BaseResponse<>(status, "Berhasil Top Up", amount);
+                    return new BaseResponse<>(status, "Berhasil Top Up IDR " + amount, amount);
                 } else {
                     return new BaseResponse<>(status, "Gagal Top Up", amount);
                 }
             }
+            counter++;
         }
         return new BaseResponse<>(false, "Account not found", amount);
     }

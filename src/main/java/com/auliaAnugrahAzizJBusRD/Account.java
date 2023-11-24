@@ -54,7 +54,7 @@ public class Account extends Serializable
 
     public boolean topUp(double amount) {
         if(amount > 0) {
-            this.balance = amount;
+            this.balance = this.balance + amount;
         }
         return (amount <= 0) ? false : true;
     }

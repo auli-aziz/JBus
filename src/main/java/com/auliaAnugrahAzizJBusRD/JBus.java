@@ -40,90 +40,26 @@ public class JBus
 //        return bus;
 //    }
 
-    // TODO: Memastikan filterByDeparture method sudah benar
     public static List<Bus> filterByDeparture(List<Bus> buses, City departure, int page, int pageSize) {
-        List<Bus> listOfBuses = new ArrayList<>();
-        for(Bus b : buses) {
-            if(b.departure.city == departure) {
-                listOfBuses.add(b);
-            }
-        }
-//        Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure);
+        Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure);
+        List<Bus> listOfBuses = Algorithm.collect(buses, predBus);
         return Algorithm.paginate(listOfBuses, page, pageSize, t -> true); // data yang sudah difilter (yang sesuai dengan departure)
     }
 
     public static List<Bus> filterByPrice(List<Bus> buses, int min, int max) {
-//        List<Bus> temp = new ArrayList<>();
-//        for(Bus b : buses) {
-//            if(b.price.price >= min && b.price.price <= max) {
-//                temp.add(b);
-//            }
-//        }
-//        return temp;
         Predicate<Bus> predBus = (b) -> b.price.price >= min && b.price.price <= max;
         return Algorithm.collect(buses, predBus);
     }
 
     public static Bus filterBusId(List<Bus> buses, int id) {
-//        Bus resultBus = null;
-//        for(Bus b : buses) {
-//            if(b.id == id) {
-//                resultBus = b;
-//            }
-//        }
-//        return resultBus;
         Predicate<Bus> predBus = (b) -> b.id == id;
         return Algorithm.find(buses, predBus);
     }
 
     public static List<Bus> filterByDepartureAndArrival(List<Bus> buses, City departure, City arrival, int page, int pageSize) {
-//        List<Bus> temp = new ArrayList<>();
-//        for(Bus b : buses) {
-//            if(b.departure.city == departure && b.arrival.city == arrival) {
-//                temp.add(b);
-//            }
-//        }
         Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure) && b.arrival.city.equals(arrival);
         return Algorithm.paginate(buses, page, pageSize, predBus);
     }
-
-//    private static void testExist(Integer[] t) {
-//        int valueToCheck = 67;
-//        boolean result3 = Algorithm.exists(t, valueToCheck);
-//        if (result3) {
-//            System.out.println(valueToCheck + " exist in the array.");
-//        } else {
-//            System.out.println(valueToCheck + " doesn't exists in the array.");
-//        }
-//    }
-//    public static void testCount(Integer[] t) {
-//        int valueToCount = 18;
-//        int result = Algorithm.count(t, valueToCount);
-//        System.out.println("Number " + valueToCount + " appears " + result + " times");
-//    }
-//    public static void testFind(Integer[] t) {
-//        Integer valueToFind = 69;
-//        Integer result2 = Algorithm.find(t, valueToFind);
-//        System.out.print("Finding " + valueToFind + " inside the array : ");
-//        if (result2 != null) {
-//            System.out.println("Found!" + result2);
-//        } else {
-//            System.out.println("Not Found");
-//        }
-//    }
-//    private static void testCollect(Integer[] t) {
-//        Predicate<Integer> below = (val)->val<=22;
-//        Predicate<Integer> above = (val)->val>43;
-//
-//        List<Integer> integerBelow = Algorithm.collect(t, below);
-//        List<Integer> integerAbove = Algorithm.collect(t, above);
-//
-//        System.out.println("Below 22");
-//        System.out.println(integerBelow);
-//        System.out.println("Above 43");
-//        System.out.println(integerAbove);
-//    }
-
     public static int getBusId() {
         return 0;
     }
