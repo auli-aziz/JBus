@@ -7,6 +7,8 @@ import com.auliaAnugrahAzizJBusRD.dbjson.JsonAutowired;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/station")
 public class StationController implements BasicGetController<Station> {
@@ -54,4 +56,6 @@ public class StationController implements BasicGetController<Station> {
         }
     }
 
+    @GetMapping("/getAll")
+    public List<Station> getAllStation() { return getJsonTable(); }
 }

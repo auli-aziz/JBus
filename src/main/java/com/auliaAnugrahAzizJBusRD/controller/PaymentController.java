@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {
-    public static @JsonAutowired(value = Account.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\payment.json") JsonTable<Payment> paymentTable;
+    public static @JsonAutowired(value = Payment.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\payment.json") JsonTable<Payment> paymentTable;
 
     public PaymentController() {}
 

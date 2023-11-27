@@ -3,10 +3,7 @@ package com.auliaAnugrahAzizJBusRD.controller;
 import com.auliaAnugrahAzizJBusRD.*;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonAutowired;
 import com.auliaAnugrahAzizJBusRD.dbjson.JsonTable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bus")
 public class BusController implements BasicGetController<Bus> {
-    public static @JsonAutowired(value = Account.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\bus.json") JsonTable<Bus> busTable;
+    public static @JsonAutowired(value = Bus.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\bus.json") JsonTable<Bus> busTable;
 
     public BusController() {}
 
@@ -60,5 +57,10 @@ public class BusController implements BasicGetController<Bus> {
             return new BaseResponse<>(true, "Berhasil membuat schedule", b);
         }
         return new BaseResponse<>(false, "Gagal membuat schedule", null);
+    }
+
+    @GetMapping("/getMyBus")
+    public List<Bus> getMyBus(@RequestParam int accountId) {
+        return Algorithm.<Bus>collect(getJsonTable(), b -> b.accountId == accountId);
     }
 }

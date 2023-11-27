@@ -110,7 +110,7 @@ public class AccountController implements BasicGetController<Account>
             e.printStackTrace();
         }
 
-        for(Account a : this.accountTable) {
+        for(Account a : getJsonTable()) {
             if(a.email.equals(email) && a.password.equals(generatedPassword)) {
                 return new BaseResponse<>(true, "Welcome to JBus!", a);
             }
@@ -126,14 +126,14 @@ public class AccountController implements BasicGetController<Account>
             @RequestParam String address,
             @RequestParam String phoneNumber
     ) {
-        Renter renter = new Renter(companyName, phoneNumber, address);
-        for(Account a : this.accountTable) {
-            if(a.id == id && a.company == null) {
-                a.company = renter;
-                return new BaseResponse<>(true, "Berhasil membuat renter", renter);
-            }
+        Predicate<Account> pred = a -> a.id == id && a.company == null;
+        Account acc = Algorithm.find(getJsonTable(), pred);
+        if(acc != null) {
+            Renter renter = new Renter(companyName, phoneNumber, address);
+            acc.company = renter;
+            return new BaseResponse<>(true, "Berhasil membuat renter", renter);
         }
-        return new BaseResponse<>(false, "Gagal membuat renter tidak ditemukan id", renter);
+        return new BaseResponse<>(false, "Gagal membuat renter", null);
     }
 
     @PostMapping("/{id}/topUp")
@@ -141,17 +141,15 @@ public class AccountController implements BasicGetController<Account>
             @PathVariable int id,
             @RequestParam double amount
     ) {
-        int counter = 0;
-        for(Account a : this.accountTable) {
-            if(a.id == id) {
-                boolean status = a.topUp(amount);
-                if(status) {
-                    return new BaseResponse<>(status, "Berhasil Top Up IDR " + amount, amount);
-                } else {
-                    return new BaseResponse<>(status, "Gagal Top Up", amount);
-                }
+        Predicate<Account> pred = a -> a.id == id;
+        Account acc = Algorithm.find(getJsonTable(), pred);
+        if(acc != null) {
+            boolean status = acc.topUp(amount);
+            if(status) {
+                return new BaseResponse<>(status, "Berhasil Top Up IDR " + amount, amount);
+            } else {
+                return new BaseResponse<>(status, "Gagal Top Up", amount);
             }
-            counter++;
         }
         return new BaseResponse<>(false, "Account not found", amount);
     }
