@@ -50,7 +50,7 @@ public class Bus extends Serializable
         }
         this.schedules.add(new Schedule(calendar, capacity));
     }
-    
+
     public boolean read(String file) {
         return false;
     }

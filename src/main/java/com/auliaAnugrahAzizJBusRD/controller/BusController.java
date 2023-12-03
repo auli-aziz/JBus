@@ -31,12 +31,16 @@ public class BusController implements BasicGetController<Bus> {
             @RequestParam int stationArrivalId
     ) {
         Predicate<Account> predAcc = a -> a.id == accountId && a.company != null;
-        Predicate<Station> predStation = s -> s.id == stationDepartureId || s.id == stationArrivalId;
+        Predicate<Station> predDepStation = s -> s.id == stationDepartureId;
+        Predicate<Station> predArrStation = s -> s.id == stationArrivalId;
         boolean valid1 = Algorithm.exists(AccountController.accountTable, predAcc);
-        boolean valid2 = Algorithm.exists(StationController.stationTable, predStation);
+        boolean valid2 = Algorithm.exists(StationController.stationTable, predDepStation);
+        boolean valid3 = Algorithm.exists(StationController.stationTable, predArrStation);
 
-        if(valid1 && valid2) {
-            Bus bus = new Bus(name, facilities, new Price(price), capacity, busType, Algorithm.find(StationController.stationTable, predStation), Algorithm.find(StationController.stationTable, predStation), accountId);
+        if(valid1 && valid2 && valid3) {
+            Station departure = Algorithm.find(StationController.stationTable, predDepStation);
+            Station arrival = Algorithm.find(StationController.stationTable, predArrStation);
+            Bus bus = new Bus(name, facilities, new Price(price), capacity, busType, departure, arrival, accountId);
             busTable.add(bus);
             return new BaseResponse<>(true, "Berhasil menambahkan bus", bus);
         } else {
@@ -62,5 +66,11 @@ public class BusController implements BasicGetController<Bus> {
     @GetMapping("/getMyBus")
     public List<Bus> getMyBus(@RequestParam int accountId) {
         return Algorithm.<Bus>collect(getJsonTable(), b -> b.accountId == accountId);
+    }
+
+    @GetMapping("/getMyBusDetails")
+    public Bus getMyBusDetails(@RequestParam int busId) {
+        Predicate<Bus> pred = b -> b.id == busId;
+        return Algorithm.find(getJsonTable(), pred);
     }
 }
