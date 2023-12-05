@@ -60,6 +60,7 @@ public class Schedule
     public boolean isSeatAvailable(String seat) {
         return seatAvailability.getOrDefault(seat, false);
     }
+
     public boolean isSeatAvailable(List<String> seatList) {
         boolean status = false;
         for(String seat : seatList) {
@@ -67,7 +68,7 @@ public class Schedule
                 status = true;
             }
         }
-        return status; // ini menandakan bus sudah penuh (?)
+        return status; // Menandakan ketersediaan seat yang dipilih
     }
     
     public void bookSeat(String seat) {

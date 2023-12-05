@@ -27,51 +27,77 @@ public class PaymentController implements BasicGetController<Payment> {
             @RequestParam List<String> busSeats,
             @RequestParam String departureDate
     ) {
-        Timestamp timestamp = Timestamp.valueOf(departureDate);
-        Predicate<Account> predAccount = a -> a.id == buyerId;
+        Timestamp departureTimestamp = Timestamp.valueOf(departureDate);
+
+        Predicate<Account> predBuyer = a -> a.id == buyerId;
         Predicate<Bus> predBus = b -> b.id == busId;
 
-        Account acc = Algorithm.find(AccountController.accountTable, predAccount);
+        // Check the existence of buyer account and bus
+        Account buyerAcc = Algorithm.find(AccountController.accountTable, predBuyer);
         Bus bus = Algorithm.find(BusController.busTable, predBus);
 
-        boolean statusSched = false;
+        boolean isSchedExist = false;
+        boolean isRenterExist = false;
 
-        for(int i = 0; i < bus.schedules.size(); i++) {
-            if(bus.schedules.get(i).departureSchedule.equals(timestamp)) {
-                System.out.println(bus.schedules.get(i).departureSchedule);
-                statusSched = true;
-            }
-        }
-
-        Payment payment = null;
-        if(acc != null && bus != null && statusSched) {
-            if(acc.balance >= bus.price.price * busSeats.size()) {
-                payment = new Payment(buyerId, renterId, busId, busSeats, timestamp);
+        // Check if there is a renter with the given id
+        for (Account a : AccountController.accountTable) {
+            if(a.company == null) {
+                continue;
             } else {
-                return new BaseResponse<>(false, "Kekurangan saldo", payment);
+                if(a.company.id == renterId) isRenterExist = true;
             }
         }
+        if(!isRenterExist) {
+            return new BaseResponse<>(false, "Renter does not exist", null);
+        }
 
-        if(payment == null) {
-            return new BaseResponse<>(false, "Gagal membuat booking", payment);
+        if(buyerAcc != null && bus != null) {
+
+            // The departure date needs to match one of the bus schedules
+            for(int i = 0; i < bus.schedules.size(); i++) {
+                if(bus.schedules.get(i).departureSchedule.equals(departureTimestamp)) {
+                    isSchedExist = true;
+                }
+            }
+            if(!isSchedExist) {
+                return new BaseResponse<>(false, "Schedule does not exist", null);
+            }
+
+            // Check for the balance of the buyer
+            double totalPrice = bus.price.price * busSeats.size();
+            if(buyerAcc.balance >= totalPrice) {
+                Payment payment = new Payment(buyerId, renterId, busId, busSeats, departureTimestamp);
+                // TODO: Check if the seat is still available
+                boolean isBooked = payment.makeBooking(departureTimestamp, busSeats, bus);
+                if(!isBooked) {
+                    payment.status = Invoice.PaymentStatus.WAITING;
+                    paymentTable.add(payment);
+                }
+//                else {
+//                    return new BaseResponse<>(false, "Kursi sudah di-book", null);
+//                }
+                return new BaseResponse<>(true, "Berhasil membuat booking", payment);
+            } else {
+                return new BaseResponse<>(false, "Kekurangan saldo", null);
+            }
+
         } else {
-            payment.makeBooking(timestamp, busSeats, bus);
-            payment.status = Invoice.PaymentStatus.WAITING;
-            paymentTable.add(payment);
-            return new BaseResponse<>(true, "Berhasil membuat booking", payment);
+            return new BaseResponse<>(false, "Gagal membuat booking", null);
         }
     }
 
     @RequestMapping(value="/{id}/accept", method= RequestMethod.POST)
     public BaseResponse<Payment> accept(@PathVariable int id) {
         Predicate<Payment> pred = p -> p.id == id;
-        Payment payment = null;
         if(Algorithm.exists(getJsonTable(), pred)) {
-             payment = Algorithm.find(this.paymentTable, pred);
-             payment.status = Invoice.PaymentStatus.SUCCESS;
+            Payment payment = Algorithm.find(this.paymentTable, pred);
+            if(payment.status == Invoice.PaymentStatus.FAILED) {
+                return new BaseResponse<>(false, "Booking telah dicanc", null);
+            }
+            payment.status = Invoice.PaymentStatus.SUCCESS;
             return new BaseResponse<>(true, "Sukses menerima booking", payment);
         }
-        return new BaseResponse<>(false, "Gagal menerima booking", payment);
+        return new BaseResponse<>(false, "Gagal menerima booking", null);
     }
 
     @RequestMapping(value="/{id}/cancel", method=RequestMethod.POST)
@@ -86,4 +112,8 @@ public class PaymentController implements BasicGetController<Payment> {
         return new BaseResponse<>(false, "Gagal meng-cancel booking", payment);
     }
 
+    @GetMapping("/getPaymentRequests")
+    public List<Payment> getPaymentRequests(@RequestParam int busId) {
+        return Algorithm.<Payment>collect(getJsonTable(), p -> p.getBusId() == busId);
+    }
 }

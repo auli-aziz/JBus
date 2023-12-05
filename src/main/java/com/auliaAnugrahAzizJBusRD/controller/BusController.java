@@ -26,7 +26,7 @@ public class BusController implements BasicGetController<Bus> {
             @RequestParam int capacity,
             @RequestParam List<Facility> facilities,
             @RequestParam BusType busType,
-            @RequestParam int price,
+            @RequestParam double price,
             @RequestParam int stationDepartureId,
             @RequestParam int stationArrivalId
     ) {
