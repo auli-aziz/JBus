@@ -62,15 +62,15 @@ public class Schedule
     }
 
     public boolean isSeatAvailable(List<String> seatList) {
-        boolean status = false;
-        for(String seat : seatList) {
-            if(seatAvailability.getOrDefault(seat, false)) {
-                status = true;
+        for (String seat : seatList) {
+            if (!seatAvailability.getOrDefault(seat, false)) {
+                return false;
             }
         }
-        return status; // Menandakan ketersediaan seat yang dipilih
+        return true;
     }
-    
+
+
     public void bookSeat(String seat) {
         this.seatAvailability.put(seat, false);
     }

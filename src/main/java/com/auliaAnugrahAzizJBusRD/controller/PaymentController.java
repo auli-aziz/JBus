@@ -67,22 +67,19 @@ public class PaymentController implements BasicGetController<Payment> {
             double totalPrice = bus.price.price * busSeats.size();
             if(buyerAcc.balance >= totalPrice) {
                 Payment payment = new Payment(buyerId, renterId, busId, busSeats, departureTimestamp);
-                // TODO: Check if the seat is still available
-                boolean isBooked = payment.makeBooking(departureTimestamp, busSeats, bus);
-                if(!isBooked) {
-                    payment.status = Invoice.PaymentStatus.WAITING;
-                    paymentTable.add(payment);
+                boolean isSuccess = payment.makeBooking(departureTimestamp, busSeats, bus);
+                if(!isSuccess) {
+                    return new BaseResponse<>(false, "Seat already Booked", null);
                 }
-//                else {
-//                    return new BaseResponse<>(false, "Kursi sudah di-book", null);
-//                }
-                return new BaseResponse<>(true, "Berhasil membuat booking", payment);
+                payment.status = Invoice.PaymentStatus.WAITING;
+                paymentTable.add(payment);
+                return new BaseResponse<>(true, "Booking Successful", payment);
             } else {
-                return new BaseResponse<>(false, "Kekurangan saldo", null);
+                return new BaseResponse<>(false, "Not Enough Balance", null);
             }
 
         } else {
-            return new BaseResponse<>(false, "Gagal membuat booking", null);
+            return new BaseResponse<>(false, "Booking Failed", null);
         }
     }
 
@@ -92,12 +89,12 @@ public class PaymentController implements BasicGetController<Payment> {
         if(Algorithm.exists(getJsonTable(), pred)) {
             Payment payment = Algorithm.find(this.paymentTable, pred);
             if(payment.status == Invoice.PaymentStatus.FAILED) {
-                return new BaseResponse<>(false, "Booking telah dicanc", null);
+                return new BaseResponse<>(false, "Booking has already been canceled", null);
             }
             payment.status = Invoice.PaymentStatus.SUCCESS;
-            return new BaseResponse<>(true, "Sukses menerima booking", payment);
+            return new BaseResponse<>(true, "Booking Accepted", payment);
         }
-        return new BaseResponse<>(false, "Gagal menerima booking", null);
+        return new BaseResponse<>(false, "Booking Rejected", null);
     }
 
     @RequestMapping(value="/{id}/cancel", method=RequestMethod.POST)
@@ -107,9 +104,14 @@ public class PaymentController implements BasicGetController<Payment> {
         if(Algorithm.exists(getJsonTable(), pred)) {
             payment = Algorithm.find(this.paymentTable, pred);
             payment.status = Invoice.PaymentStatus.FAILED;
-            return new BaseResponse<>(true, "Sukses meng-cancel booking", payment);
+            return new BaseResponse<>(true, "Booking Canceled", payment);
         }
-        return new BaseResponse<>(false, "Gagal meng-cancel booking", payment);
+        return new BaseResponse<>(false, "Booking Cancel Failed", payment);
+    }
+
+    @GetMapping("/getPayments")
+    public List<Payment> getPayments(@RequestParam int buyerId) {
+        return Algorithm.<Payment>collect(getJsonTable(), p -> p.buyerId == buyerId);
     }
 
     @GetMapping("/getPaymentRequests")

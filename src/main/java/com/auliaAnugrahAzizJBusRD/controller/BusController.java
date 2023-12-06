@@ -42,9 +42,9 @@ public class BusController implements BasicGetController<Bus> {
             Station arrival = Algorithm.find(StationController.stationTable, predArrStation);
             Bus bus = new Bus(name, facilities, new Price(price), capacity, busType, departure, arrival, accountId);
             busTable.add(bus);
-            return new BaseResponse<>(true, "Berhasil menambahkan bus", bus);
+            return new BaseResponse<>(true, "Add Bus Successful", bus);
         } else {
-            return new BaseResponse<>(false, "Gagal menambahkan bus", null);
+            return new BaseResponse<>(false, "Add Bus Failed", null);
         }
     }
 
@@ -58,9 +58,14 @@ public class BusController implements BasicGetController<Bus> {
         if(b != null) {
             Timestamp timestamp = Timestamp.valueOf(time);
             b.addSchedule(timestamp);
-            return new BaseResponse<>(true, "Berhasil membuat schedule", b);
+            return new BaseResponse<>(true, "Add Schedule Successful", b);
         }
-        return new BaseResponse<>(false, "Gagal membuat schedule", null);
+        return new BaseResponse<>(false, "Add Schedule Failed", null);
+    }
+
+    @GetMapping("/getAll")
+    public List<Bus> getAllBus() {
+        return getJsonTable();
     }
 
     @GetMapping("/getMyBus")

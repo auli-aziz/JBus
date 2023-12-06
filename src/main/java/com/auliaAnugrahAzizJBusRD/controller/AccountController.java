@@ -49,12 +49,12 @@ public class AccountController implements BasicGetController<Account>
             )
     {
         if(name.isBlank() || email.isBlank() || password.isBlank()) {
-            return new BaseResponse<>(false, "Gagal register, masukkan semua data", null);
+            return new BaseResponse<>(false, "Register Failed, enter all required fields", null);
         }
 
         for(int i = 0; i < this.accountTable.size(); i++) {
             if(this.accountTable.get(i).email.equals(email)) {
-                return new BaseResponse<>(false, "Gagal register, email sudah terdaftar", null);
+                return new BaseResponse<>(false, "Register Failed, email already registered", null);
             }
         }
 
@@ -77,12 +77,12 @@ public class AccountController implements BasicGetController<Account>
         Account account = new Account(name, email, password);
         if(!account.validate()) {
             account = null;
-            return new BaseResponse<>(false, "Gagal register, masukkan password atau email sesuai syarat", null);
+            return new BaseResponse<>(false, "Register Failed, enter valid password and email", null);
         }
 
         account.password = generatedPassword;
         accountTable.add(account);
-        return new BaseResponse<>(true, "Berhasil register", account);
+        return new BaseResponse<>(true, "Register Success", account);
     }
 
     @PostMapping("/login")
@@ -116,7 +116,7 @@ public class AccountController implements BasicGetController<Account>
             }
         }
 
-        return new BaseResponse<>(false, "Gagal login", null);
+        return new BaseResponse<>(false, "Login Failed", null);
     }
 
     @PostMapping("/{id}/registerRenter")
@@ -131,9 +131,9 @@ public class AccountController implements BasicGetController<Account>
         if(acc != null) {
             Renter renter = new Renter(companyName, phoneNumber, address);
             acc.company = renter;
-            return new BaseResponse<>(true, "Berhasil membuat renter", renter);
+            return new BaseResponse<>(true, "Renter Register Success", renter);
         }
-        return new BaseResponse<>(false, "Gagal membuat renter", null);
+        return new BaseResponse<>(false, "Renter Register Failed", null);
     }
 
     @PostMapping("/{id}/topUp")
@@ -146,9 +146,9 @@ public class AccountController implements BasicGetController<Account>
         if(acc != null) {
             boolean status = acc.topUp(amount);
             if(status) {
-                return new BaseResponse<>(status, "Berhasil Top Up IDR " + amount, amount);
+                return new BaseResponse<>(status, "Top Up Success", amount);
             } else {
-                return new BaseResponse<>(status, "Gagal Top Up", amount);
+                return new BaseResponse<>(status, "Top Up Failed", amount);
             }
         }
         return new BaseResponse<>(false, "Account not found", amount);

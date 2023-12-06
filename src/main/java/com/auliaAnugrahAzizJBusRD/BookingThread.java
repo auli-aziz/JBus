@@ -16,7 +16,7 @@ public class BookingThread extends Thread {
         synchronized (this.bus) {
             System.out.println(Thread.currentThread().getName() + " ID: " + Thread.currentThread().getId() + " is running");
             String msgSuccess = "Berhasil Melakukan Booking";
-            String msgFailed = "Berhasil Melakukan Booking";
+            String msgFailed = "Gagal Melakukan Booking";
             if(Payment.makeBooking(this.timestamp, "RD01", this.bus)) {
                 System.out.println(msgSuccess);
             } else {
