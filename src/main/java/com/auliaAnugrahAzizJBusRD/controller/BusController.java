@@ -40,7 +40,8 @@ public class BusController implements BasicGetController<Bus> {
         if(valid1 && valid2 && valid3) {
             Station departure = Algorithm.find(StationController.stationTable, predDepStation);
             Station arrival = Algorithm.find(StationController.stationTable, predArrStation);
-            Bus bus = new Bus(name, facilities, new Price(price), capacity, busType, departure, arrival, accountId);
+            Price p = new Price(price, price * 0.25);
+            Bus bus = new Bus(name, facilities, p, capacity, busType, departure, arrival, accountId);
             busTable.add(bus);
             return new BaseResponse<>(true, "Add Bus Successful", bus);
         } else {
@@ -73,8 +74,8 @@ public class BusController implements BasicGetController<Bus> {
         return Algorithm.<Bus>collect(getJsonTable(), b -> b.accountId == accountId);
     }
 
-    @GetMapping("/getMyBusDetails")
-    public Bus getMyBusDetails(@RequestParam int busId) {
+    @GetMapping("/getBusDetails")
+    public Bus getBusDetails(@RequestParam int busId) {
         Predicate<Bus> pred = b -> b.id == busId;
         return Algorithm.find(getJsonTable(), pred);
     }

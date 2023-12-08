@@ -19,20 +19,6 @@ public class AccountController implements BasicGetController<Account>
     public static @JsonAutowired(value = Account.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\account.json") JsonTable<Account> accountTable;
 //    @GetMapping
 //    String index() { return "account page"; }
-//
-//    @PostMapping("/register")
-//    Account register
-//            (
-//                    @RequestParam String name,
-//                    @RequestParam String email,
-//                    @RequestParam String password
-//            )
-//    {
-//        return new Account(name, email, password);
-//    }
-//
-//    @GetMapping("/{id}")
-//    String getById(@PathVariable int id) { return "account id " + id + " not found!"; }
 
     public AccountController() {}
 

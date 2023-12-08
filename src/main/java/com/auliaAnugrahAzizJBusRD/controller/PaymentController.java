@@ -66,6 +66,7 @@ public class PaymentController implements BasicGetController<Payment> {
             // Check for the balance of the buyer
             double totalPrice = bus.price.price * busSeats.size();
             if(buyerAcc.balance >= totalPrice) {
+                buyerAcc.balance -= totalPrice;
                 Payment payment = new Payment(buyerId, renterId, busId, busSeats, departureTimestamp);
                 boolean isSuccess = payment.makeBooking(departureTimestamp, busSeats, bus);
                 if(!isSuccess) {
@@ -87,7 +88,7 @@ public class PaymentController implements BasicGetController<Payment> {
     public BaseResponse<Payment> accept(@PathVariable int id) {
         Predicate<Payment> pred = p -> p.id == id;
         if(Algorithm.exists(getJsonTable(), pred)) {
-            Payment payment = Algorithm.find(this.paymentTable, pred);
+            Payment payment = Algorithm.find(getJsonTable(), pred);
             if(payment.status == Invoice.PaymentStatus.FAILED) {
                 return new BaseResponse<>(false, "Booking has already been canceled", null);
             }
@@ -98,15 +99,24 @@ public class PaymentController implements BasicGetController<Payment> {
     }
 
     @RequestMapping(value="/{id}/cancel", method=RequestMethod.POST)
-    public BaseResponse<Payment> cancel(@PathVariable int id) {
-        Predicate<Payment> pred = p -> p.id == id;
-        Payment payment = null;
-        if(Algorithm.exists(getJsonTable(), pred)) {
-            payment = Algorithm.find(this.paymentTable, pred);
+    public BaseResponse<Payment> cancel(
+            @PathVariable int id,
+            @RequestParam int buyerId,
+            @RequestParam int busId
+    ) {
+        Predicate<Payment> predPay = p -> p.id == id;
+        Predicate<Account> predAcc = a -> a.id == buyerId;
+        Predicate<Bus> predBus = b -> b.id == busId;
+        Payment payment = Algorithm.find(this.paymentTable, predPay);
+        Account account = Algorithm.find(AccountController.accountTable, predAcc);
+        Bus bus = Algorithm.find(BusController.busTable, predBus);
+
+        if(payment != null && account != null && bus != null) {
+            account.balance += bus.price.getRebatedPrice();
             payment.status = Invoice.PaymentStatus.FAILED;
             return new BaseResponse<>(true, "Booking Canceled", payment);
         }
-        return new BaseResponse<>(false, "Booking Cancel Failed", payment);
+        return new BaseResponse<>(false, "Booking Cancel Failed", null);
     }
 
     @GetMapping("/getPayments")

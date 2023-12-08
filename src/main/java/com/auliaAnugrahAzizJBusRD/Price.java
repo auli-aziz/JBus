@@ -41,13 +41,12 @@ public class Price
     //     return discountPrice;
     // }
     
-    // private double getRebatedPrice() {
-    //     if(rebate > price) {
-    //         return 0;
-    //     }
-    //     double rebatedPrice = this.price - this.rebate;
-    //     return rebatedPrice;
-    // }
+     public double getRebatedPrice() {
+         if(rebate > price) {
+             return 0;
+         }
+         return this.price - this.rebate;
+     }
     
     public String toString() {
         return "\tRebate: " + this.rebate + "\tPrice: " + this.price;

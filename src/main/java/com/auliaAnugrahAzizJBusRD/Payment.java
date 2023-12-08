@@ -32,10 +32,6 @@ public class Payment extends Invoice
         this.busSeat = busSeat;
     }
     
-    //public String toString() {
-    //    return "Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate + "\nBusSeat: " + this.busSeat;
-    //}
-    
     public int getBusId() {
         return this.busId;
     }
@@ -52,18 +48,8 @@ public class Payment extends Invoice
         return curr_date;
     }
 
-//    public static boolean isAvailable(Timestamp departureSchedule, String seat, Bus bus) {
-//        for(Schedule s : bus.schedules) {
-//            if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
     public static Schedule availableSchedule(Timestamp departureSchedule, String seat, Bus bus) {
         for(Schedule s : bus.schedules) {
-//            boolean status = Algorithm.find(bus.schedules, seat);
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seat)) {
                 return s;
             }
