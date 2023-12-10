@@ -2,7 +2,7 @@ package com.auliaAnugrahAzizJBusRD;
 
 
 /**
- * Write a description of class Price here.
+ * Sets the price for bus
  *
  * @author Aulia Anugrah Aziz
  * @version 10 Desember 2023

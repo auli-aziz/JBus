@@ -17,12 +17,17 @@ public class Schedule
 {
     public Timestamp departureSchedule;
     public Map<String, Boolean> seatAvailability;
-    
+
     public Schedule(Timestamp departureSchedule, int numberOfSeats) {
         this.departureSchedule = departureSchedule;
         initializeSeatAvailability(numberOfSeats);
     }
-    
+
+    /**
+     * Creates new Seat list for a given schedule and sets availability to true
+     *
+     * @param numberOfSeats
+     */
     private void initializeSeatAvailability(int numberOfSeats) {
         this.seatAvailability  = new LinkedHashMap<String, Boolean>();
         for(int seatNumber = 1; seatNumber <= numberOfSeats; seatNumber++) {
@@ -32,11 +37,23 @@ public class Schedule
         
         
     }
-    
+
+    /**
+     * Checks for seat availability of a single seat
+     *
+     * @param seat
+     * @return      true if the seat is available, otherwise false
+     */
     public boolean isSeatAvailable(String seat) {
         return seatAvailability.getOrDefault(seat, false);
     }
 
+    /**
+     * Checks for seat availability of a list of seats
+     *
+     * @param seatList
+     * @return          true if the seats are available, otherwise false
+     */
     public boolean isSeatAvailable(List<String> seatList) {
         for (String seat : seatList) {
             if (!seatAvailability.getOrDefault(seat, false)) {
@@ -46,11 +63,18 @@ public class Schedule
         return true;
     }
 
-
+    /**
+     * Books seat
+     * @param seat
+     */
     public void bookSeat(String seat) {
         this.seatAvailability.put(seat, false);
     }
 
+    /**
+     * Books seat list
+     * @param seatList
+     */
     public void bookSeat(List<String> seatList) {
         for(String seat : seatList) {
             if(seatAvailability.getOrDefault(seat, false)) {

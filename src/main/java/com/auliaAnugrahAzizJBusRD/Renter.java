@@ -5,7 +5,8 @@ import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
 import java.util.regex.*;
 
 /**
- * Write a description of class Renter here.
+ * Renter is used by an account to manage bus. Not all accounts are renter. To become a renter
+ * the account needs to register as renter
  *
  * @author Aulia Anugrah Aziz
  * @version 10 Desember 2023

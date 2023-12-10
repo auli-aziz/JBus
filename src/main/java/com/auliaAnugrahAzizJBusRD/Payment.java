@@ -57,7 +57,7 @@ public class Payment extends Invoice
      * @param departureSchedule
      * @param seatList
      * @param bus
-     * @return                      available schedule for a seat list
+     * @return                  available schedule for a seat list
      */
     public static Schedule availableSchedule(Timestamp departureSchedule, List<String> seatList, Bus bus) {
         for(Schedule s : bus.schedules) {

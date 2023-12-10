@@ -1,7 +1,7 @@
 
 # JBus
 
-JBus is the final project for Object-Oriented Programming Lab in the third semester of my Computer Engineering degree at University of Indonesia. This repository is specifically for the back-end part of the JBus android application. The program can be run on with the SpringBoot framework in Java.
+JBus is the final project for Object-Oriented Programming Lab in the third semester of my Computer Engineering degree at University of Indonesia. This repository is specifically for the back-end part of the JBus android application. The program uses SpringBoot framework in Java to connect to the front-end of the application.
 ## Authors
 
 - [@auli-aziz](https://www.github.com/auli-aziz)

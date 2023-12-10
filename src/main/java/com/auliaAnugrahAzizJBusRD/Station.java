@@ -4,7 +4,7 @@ package com.auliaAnugrahAzizJBusRD;
 import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
 
 /**
- * Write a description of class Station here.
+ * Station is used for the departure and arrival station of the bus
  *
  * @author Aulia Anugrah Aziz
  * @version 10 Desember 2023

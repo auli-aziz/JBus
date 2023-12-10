@@ -2,7 +2,8 @@ package com.auliaAnugrahAzizJBusRD;
 
 
 /**
- * Write a description of class Invoice here.
+ * Invoice is inherited by payment to store the timestamp of the payment,
+ * buyer ID, renter ID, payment status and bus rating.
  *
  * @author Aulia Anugrah Aziz
  * @version 10 Desember 2023
