@@ -14,7 +14,7 @@ import java.util.HashMap;
 /**
  * Handle load and store for {@link JsonTable}
  * @author Netlab Team
- * @version 0.1
+ * @version 0.
  */
 @SuppressWarnings("unchecked")
 public class JsonDBEngine

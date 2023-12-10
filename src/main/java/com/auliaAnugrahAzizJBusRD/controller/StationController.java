@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Handles all the API requests that is related to manipulating data on station.json
+ *
+ * @author Netlab Team
+ * @version 0.1
+ */
 @RestController
 @RequestMapping("/station")
 public class StationController implements BasicGetController<Station> {
@@ -23,7 +29,20 @@ public class StationController implements BasicGetController<Station> {
         return this.stationTable;
     }
 
-    //Add new Station
+    /**
+     * adds new station to station.json
+     *
+     * @param stationName   new station name
+     * @param city          city enum
+     * @param address       new station address
+     * @return              <code>new BaseResponse<>(true, "Station added successfully", newStation)</code>
+     *                      if station is added to json table
+     *                      <code>new BaseResponse<>(false, "Invalid city value", null)</code>
+     *                      if the city parameter is invalid
+     *                      <code>new BaseResponse<>(false, "An error occurred while adding the station", null)</code>
+     *                      if a exception occurs
+     * @see                 City
+     */
     @PostMapping("/create")
     public BaseResponse<Station> createStation(
             @RequestParam String stationName,
@@ -56,6 +75,10 @@ public class StationController implements BasicGetController<Station> {
         }
     }
 
+    /**
+     *
+     * @return      all the station in station.json
+     */
     @GetMapping("/getAll")
     public List<Station> getAllStation() { return getJsonTable(); }
 }

@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 
 
 /**
- * Write a description of class Bus here.
+ * Class for instantiating bus object in JBus
  *
  * @author Aulia Anugrah Aziz
- * @version (a version number or a date)
+ * @version 10 Desember 2023
  */
 public class Bus extends Serializable
 {
@@ -48,13 +48,5 @@ public class Bus extends Serializable
             }
         }
         this.schedules.add(new Schedule(calendar, capacity));
-    }
-
-    public boolean read(String file) {
-        return false;
-    }
-    
-    public Object write(){
-        return null;
     }
 }

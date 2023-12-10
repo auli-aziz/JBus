@@ -5,7 +5,7 @@ package com.auliaAnugrahAzizJBusRD;
  * Write a description of class Invoice here.
  *
  * @author Aulia Anugrah Aziz
- * @version (a version number or a date)
+ * @version 10 Desember 2023
  */
 
 import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;

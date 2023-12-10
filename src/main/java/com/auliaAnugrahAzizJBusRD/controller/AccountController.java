@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+/**
+ * Handles all the API requests that is related to manipulating data on account.json
+ *
+ * @author Aulia Anugrah Aziz
+ * @version 10 December 2023
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account>
 {
     public static @JsonAutowired(value = Account.class, filepath = "src\\main\\java\\com\\auliaAnugrahAzizJBusRD\\json\\account.json") JsonTable<Account> accountTable;
-//    @GetMapping
-//    String index() { return "account page"; }
 
     public AccountController() {}
 
@@ -26,6 +29,22 @@ public class AccountController implements BasicGetController<Account>
         return this.accountTable;
     }
 
+    /**
+     * Used to register an account in JBus and generate hashed password using MD5
+     *
+     * @param name      name of the account that will be inputted into the database
+     * @param email     email of the account that will be validated in Account
+     * @param password  password will be validated in Account
+     * @return <code>new BaseResponse<>(false, "Register Failed, enter all required fields", null)</code>
+     *          if all fields has not been filled
+     *          <code>new BaseResponse<>(false, "Register Failed, email already registered", null)</code>
+     *          if there is an email with the same name in the database
+     *          <code>new BaseResponse<>(false, "Register Failed, enter valid password and email", null)</code>
+     *          if there email and password fails validate
+     *          <code>new BaseResponse<>(true, "Register Success", account)</code>
+     *          if the account has been instantiated and added to the json database
+     * @see Account#validate()
+     */
     @PostMapping("/register")
     protected BaseResponse<Account> register
             (
@@ -71,6 +90,16 @@ public class AccountController implements BasicGetController<Account>
         return new BaseResponse<>(true, "Register Success", account);
     }
 
+    /**
+     * Used to log in to JBus
+     *
+     * @param email     registered email
+     * @param password  plaintext password with the corresponding email (will be hashed in the code)
+     * @return          <code>new BaseResponse<>(true, "Welcome to JBus!", a)</code> if there is
+     *                  the email that matches the same hashed password in the json database
+     *                  <code>new BaseResponse<>(false, "Login Failed", null)</code> if the email
+     *                  and password does not match any of the entries the json database
+     */
     @PostMapping("/login")
     protected BaseResponse<Account> login
             (
@@ -105,6 +134,18 @@ public class AccountController implements BasicGetController<Account>
         return new BaseResponse<>(false, "Login Failed", null);
     }
 
+    /**
+     * regsterRenter adds a renter field to the account to create new bus
+     *
+     * @param id            ID of the account
+     * @param companyName   company name entered by the user
+     * @param address       address of the company
+     * @param phoneNumber   company phone number
+     * @return              <code>new BaseResponse<>(true, "Renter Register Success", renter)</code>
+     *                      if account with the given id is not null
+     *                      <code>new BaseResponse<>(false, "Renter Register Failed", null)</code>
+     *                      if account already has renter field or the account is not found
+     */
     @PostMapping("/{id}/registerRenter")
     protected BaseResponse<Renter> registerRenter(
             @PathVariable int id,
@@ -122,6 +163,18 @@ public class AccountController implements BasicGetController<Account>
         return new BaseResponse<>(false, "Renter Register Failed", null);
     }
 
+    /**
+     *
+     * @param id        ID of the account
+     * @param amount    amount that will be topped up to account balance
+     * @return          <code>new BaseResponse<>(status, "Top Up Success", amount)</code>
+     *                  if account matches the ID
+     *                  <code>new BaseResponse<>(false, "Top Up Failed", amount)</code>
+     *                  if the amount topped up is a negative number
+     *                  <code>new BaseResponse<>(false, "Account not found", null)</code>
+     *                  if account is not found
+     * @see Account#topUp(double)
+     */
     @PostMapping("/{id}/topUp")
     protected BaseResponse<Double> topUp(
             @PathVariable int id,
@@ -130,13 +183,11 @@ public class AccountController implements BasicGetController<Account>
         Predicate<Account> pred = a -> a.id == id;
         Account acc = Algorithm.find(getJsonTable(), pred);
         if(acc != null) {
-            boolean status = acc.topUp(amount);
-            if(status) {
-                return new BaseResponse<>(status, "Top Up Success", amount);
-            } else {
-                return new BaseResponse<>(status, "Top Up Failed", amount);
-            }
+            return (acc.topUp(amount))?
+                new BaseResponse<>(true, "Top Up Success", amount):
+                new BaseResponse<>(false, "Top Up Failed", amount);
+        } else{
+            return new BaseResponse<>(false, "Account not found", null);
         }
-        return new BaseResponse<>(false, "Account not found", amount);
     }
 }

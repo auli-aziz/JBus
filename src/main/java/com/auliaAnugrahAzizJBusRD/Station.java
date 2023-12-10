@@ -6,8 +6,8 @@ import com.auliaAnugrahAzizJBusRD.dbjson.Serializable;
 /**
  * Write a description of class Station here.
  *
- * @Aulia Anugrah Aziz
- * @version (a version number or a date)
+ * @author Aulia Anugrah Aziz
+ * @version 10 Desember 2023
  */
 public class Station extends Serializable
 {

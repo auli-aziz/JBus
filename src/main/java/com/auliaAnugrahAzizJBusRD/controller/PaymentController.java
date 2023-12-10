@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * Handles all the API requests that is related to manipulating data on payment.json
+ *
+ * @author Aulia Anugrah Aziz
+ * @version 10 December 2023
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {
@@ -19,6 +25,28 @@ public class PaymentController implements BasicGetController<Payment> {
         return this.paymentTable;
     }
 
+    /**
+     * makes bus booking and sets the payment status to AWAITING
+     *
+     * @param buyerId           the ID of the buyer that will do make booking
+     * @param renterId          the ID of the seller that own the bus
+     * @param busId             bus ID
+     * @param busSeats          the seats that will be booked
+     * @param departureDate     available departure dates
+     * @return                  <code>new BaseResponse<>(false, "Renter does not exist", null)</code>
+     *                          if Algorithm returns null for renter
+     *                          <code>new BaseResponse<>(false, "Schedule does not exist", null)</code>
+     *                          if Algorithm does not find any schedule
+     *                          <code>new BaseResponse<>(false, "Seat already Booked", null)</code>
+     *                          if the seat is already booked
+     *                          <code>new BaseResponse<>(true, "Booking Successful", payment)</code>
+     *                          if seat is booked successfully
+     *                          <code>new BaseResponse<>(false, "Not Enough Balance", null)</code>
+     *                          if buyer does not have enough balance
+     * @see Algorithm
+     * @see Payment#makeBooking(Timestamp, String, Bus)
+     * @see Payment#makeBooking(Timestamp, List, Bus)
+     */
     @RequestMapping(value="/makeBooking", method=RequestMethod.POST)
     public BaseResponse<Payment> makeBooking(
             @RequestParam int buyerId,
@@ -88,6 +116,17 @@ public class PaymentController implements BasicGetController<Payment> {
         }
     }
 
+    /**
+     * Accepts the payment
+     *
+     * @param id    ID of the payment from payment.json
+     * @return      <code>new BaseResponse<>(false, "Booking has already been canceled", null)</code>
+     *              if the payment status has already FAILED
+     *              <code>new BaseResponse<>(true, "Booking Accepted", payment)</code>
+     *              if the payments states was previously AWAITING
+     *              <code>new BaseResponse<>(false, "Booking Rejected", null)</code>
+     *              if payment object with the given ID does is not found
+     */
     @RequestMapping(value="/{id}/accept", method= RequestMethod.POST)
     public BaseResponse<Payment> accept(@PathVariable int id) {
         Predicate<Payment> pred = p -> p.id == id;
@@ -102,6 +141,16 @@ public class PaymentController implements BasicGetController<Payment> {
         return new BaseResponse<>(false, "Booking Rejected", null);
     }
 
+    /**
+     * Cancels the payment
+     *
+     * @param id            ID of the payment
+     * @param buyerId       ID of the buyer account
+     * @param busId         bus ID with the correspoding payment
+     * @param renterId      ID of the seller account
+     * @return              <code>new BaseResponse<>(true, "Booking Canceled", payment)</code>
+     *                      <code>new BaseResponse<>(false, "Booking Cancel Failed", null)</code>
+     */
     @RequestMapping(value="/{id}/cancel", method=RequestMethod.POST)
     public BaseResponse<Payment> cancel(
             @PathVariable int id,
@@ -128,11 +177,23 @@ public class PaymentController implements BasicGetController<Payment> {
         return new BaseResponse<>(false, "Booking Cancel Failed", null);
     }
 
+    /**
+     * used to display payment history
+     *
+     * @param buyerId   buyer ID
+     * @return          payments from payment.json that matches buyer ID
+     */
     @GetMapping("/getPayments")
     public List<Payment> getPayments(@RequestParam int buyerId) {
         return Algorithm.<Payment>collect(getJsonTable(), p -> p.buyerId == buyerId);
     }
 
+    /**
+     * used to display payments from other accounts that is interested in booking a seat
+     *
+     * @param busId     bus ID from bus.json
+     * @return          payments from payment.json that matches bus ID
+     */
     @GetMapping("/getPaymentRequests")
     public List<Payment> getPaymentRequests(@RequestParam int busId) {
         return Algorithm.<Payment>collect(getJsonTable(), p -> p.getBusId() == busId);

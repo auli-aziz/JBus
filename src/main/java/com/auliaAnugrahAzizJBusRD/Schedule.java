@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
  * Write a description of class Schedule here.
  *
  * @author Aulia Anugrah Aziz
- * @version (a version number or a date)
+ * @version 10 Desember 2023
  */
 public class Schedule
 {

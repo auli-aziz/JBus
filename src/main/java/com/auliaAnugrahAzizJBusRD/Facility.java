@@ -2,10 +2,10 @@ package com.auliaAnugrahAzizJBusRD;
 
 
 /**
- * Enumeration class Facility - write a description of the enum class here
+ * Enumeration class Facility
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author Aulia Anugrah Aziz
+ * @version 10 Desember 2023
  */
 public enum Facility
 {

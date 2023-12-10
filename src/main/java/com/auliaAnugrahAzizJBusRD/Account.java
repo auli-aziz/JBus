@@ -8,10 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Account here.
+ * Class for instantiating account for JBus
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Aulia Anugrah Aziz
+ * @version 10 Desember 2023
  */
 public class Account extends Serializable
 {
@@ -34,14 +34,6 @@ public class Account extends Serializable
     public String toString() {
         return "Id: " + this.id + "\nName: " + this.name + "\nEmail: " + this.email + "\nPassword: " + this.password;
     }
-    
-    public Object write() {
-        return null;
-    }
-    
-    public boolean read(String file) {
-        return false;
-    }
 
     public boolean validate() {
         Pattern emailPattern = Pattern.compile(this.REGEX_EMAIL);
@@ -54,7 +46,7 @@ public class Account extends Serializable
 
     public boolean topUp(double amount) {
         if(amount > 0) {
-            this.balance = this.balance + amount;
+            this.balance += amount;
         }
         return (amount <= 0) ? false : true;
     }

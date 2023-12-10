@@ -2,6 +2,12 @@ package com.auliaAnugrahAzizJBusRD.dbjson;
 
 import java.util.HashMap;
 
+/**
+ * A Class that assigns an ID automatically to an object that inherits from Serializable
+ *
+ * @author Netlab Team
+ * @version 0.1
+ */
 public class Serializable implements Comparable<Serializable>{
     public final int id;
     private static HashMap<Class<?>, Integer> mapCounter = new HashMap<Class <?>, Integer>();

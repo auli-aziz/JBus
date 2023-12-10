@@ -7,8 +7,8 @@ import java.util.regex.*;
 /**
  * Write a description of class Renter here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Aulia Anugrah Aziz
+ * @version 10 Desember 2023
  */
 public class Renter extends Serializable
 {

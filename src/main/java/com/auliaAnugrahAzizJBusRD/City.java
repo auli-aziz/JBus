@@ -2,10 +2,10 @@ package com.auliaAnugrahAzizJBusRD;
 
 
 /**
- * Enumeration class City - write a description of the enum class here
+ * Enumeration class City
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author Aulia Anugrah Aziz
+ * @version 10 Desember 2023
  */
 public enum City
 {

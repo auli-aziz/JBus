@@ -5,6 +5,17 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Used to check:
+ * whether an element exists in an array or arraylist;
+ * count the number of times an element has occured within a certain array or arraylist;
+ * find the element or the object that matches predicate;
+ * collect a list of elements that matches predicate;
+ * paginate a page
+ *
+ * @author Aulia Anugrah Aziz
+ * @version 10 December 2023
+ */
 public class Algorithm {
     private Algorithm() {
 
