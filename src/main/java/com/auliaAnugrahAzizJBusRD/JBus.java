@@ -32,14 +32,6 @@ public class JBus
         Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
     }
 
-//    public static Bus createBus() {
-//        Price price = new Price(750000, 5);
-//        Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25, BusType.REGULER, City.BANDUNG, new Station("Depok Terminal", City.DEPOK, "Jl. Margonda Raya"), new Station("Halte UI", City.JAKARTA, "Universitas Indonesia"));
-//        Timestamp timestamp = Timestamp.valueOf("2023-07-27 19:00:00");
-//        bus.addSchedule(timestamp);
-//        return bus;
-//    }
-
     public static List<Bus> filterByDeparture(List<Bus> buses, City departure, int page, int pageSize) {
         Predicate<Bus> predBus = (b) -> b.departure.city.equals(departure);
         List<Bus> listOfBuses = Algorithm.collect(buses, predBus);
@@ -72,22 +64,6 @@ public class JBus
         return true;
     }
     
-    public static float getDiscountPercentage(int beforeDiscount, int afterDiscount){
-        if(beforeDiscount > afterDiscount) {
-            return (((float)beforeDiscount - (float)afterDiscount) / (float)beforeDiscount) * 100;
-        } else {
-            return 0.0f;   
-        }
-    } 
-    
-    public static int getDiscountedPrice(int price, float discountPercentage) {
-        if(discountPercentage > 100.0f) {
-            discountPercentage = 100.0f;
-        }
-        float discountedPrice = price - (price * discountPercentage) / 100;
-        return (int)discountedPrice;
-    }
-    
     public static int getOriginalPrice(int discountedPrice, float discountPercentage) {
         float discountDecimal = discountPercentage / 100;
         float originalPrice = discountedPrice / (1 - discountDecimal);
@@ -95,18 +71,18 @@ public class JBus
     }
     
     public static float getAdminFeePercentage() {
-        return 0.05f;
+        return 0.02f;
     }
     
-    public static int getAdminFee(int price) {
+    public static double getAdminFee(double price) {
         float adminFeePercentage = getAdminFeePercentage();
-        float adminFee = price * adminFeePercentage;
-        return (int)adminFee;
+        double adminFee = price * adminFeePercentage;
+        return adminFee;
     }
     
-    public static int getTotalPrice(int price, int numberOfSeat) {
-        int totalPrice = price * numberOfSeat;
-        int adminFee = getAdminFee(totalPrice);
-        return (totalPrice) + adminFee;
+    public static double getTotalPrice(double price, int numberOfSeat) {
+        double totalPrice = price * numberOfSeat;
+        double adminFee = getAdminFee(totalPrice);
+        return totalPrice + adminFee;
     }
 }

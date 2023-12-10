@@ -11,9 +11,7 @@ public class Algorithm {
     }
 
     public static <T> boolean exists(Iterator<T> iterator, T value) {
-        // sama dengan lambda function
         final Predicate<T> pred = value::equals;
-//        final Predicate<T> pred = (e) -> e.equals();
         return exists(iterator, pred);
     }
     public static <T> boolean exists(Iterable<T> iterable, Predicate<T> pred) {

@@ -30,10 +30,12 @@ public class PaymentController implements BasicGetController<Payment> {
         Timestamp departureTimestamp = Timestamp.valueOf(departureDate);
 
         Predicate<Account> predBuyer = a -> a.id == buyerId;
+        Predicate<Account> predSeller = a -> a.company.id == renterId;
         Predicate<Bus> predBus = b -> b.id == busId;
 
         // Check the existence of buyer account and bus
         Account buyerAcc = Algorithm.find(AccountController.accountTable, predBuyer);
+        Account sellerAcc = Algorithm.find(AccountController.accountTable, predSeller);
         Bus bus = Algorithm.find(BusController.busTable, predBus);
 
         boolean isSchedExist = false;
@@ -64,9 +66,11 @@ public class PaymentController implements BasicGetController<Payment> {
             }
 
             // Check for the balance of the buyer
-            double totalPrice = bus.price.price * busSeats.size();
+            double totalPrice = JBus.getTotalPrice(bus.price.price, busSeats.size());
             if(buyerAcc.balance >= totalPrice) {
                 buyerAcc.balance -= totalPrice;
+                sellerAcc.balance += totalPrice;
+
                 Payment payment = new Payment(buyerId, renterId, busId, busSeats, departureTimestamp);
                 boolean isSuccess = payment.makeBooking(departureTimestamp, busSeats, bus);
                 if(!isSuccess) {
@@ -102,17 +106,22 @@ public class PaymentController implements BasicGetController<Payment> {
     public BaseResponse<Payment> cancel(
             @PathVariable int id,
             @RequestParam int buyerId,
-            @RequestParam int busId
+            @RequestParam int busId,
+            @RequestParam int renterId
     ) {
         Predicate<Payment> predPay = p -> p.id == id;
-        Predicate<Account> predAcc = a -> a.id == buyerId;
+        Predicate<Account> predBuyer = a -> a.id == buyerId;
+        Predicate<Account> predSeller = a -> a.company.id == renterId;
         Predicate<Bus> predBus = b -> b.id == busId;
-        Payment payment = Algorithm.find(this.paymentTable, predPay);
-        Account account = Algorithm.find(AccountController.accountTable, predAcc);
+        Payment payment = Algorithm.find(getJsonTable(), predPay);
+        Account buyerAcc = Algorithm.find(AccountController.accountTable, predBuyer);
+        Account sellerAcc = Algorithm.find(AccountController.accountTable, predSeller);
         Bus bus = Algorithm.find(BusController.busTable, predBus);
 
-        if(payment != null && account != null && bus != null) {
-            account.balance += bus.price.getRebatedPrice();
+        if(payment != null && buyerAcc != null && bus != null) {
+            buyerAcc.balance += bus.price.getRebatedPrice();
+            sellerAcc.balance -= bus.price.rebate;
+
             payment.status = Invoice.PaymentStatus.FAILED;
             return new BaseResponse<>(true, "Booking Canceled", payment);
         }

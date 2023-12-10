@@ -41,7 +41,6 @@ public class Bus extends Serializable
         return "Bus ID: " + this.id + "\tName: " + this.name + "\tFacility: " + this.facility + this.price + "\tCapacity: " + this.capacity + "\tBusType: " + this.busType + this.departure + this.arrival;
     }
 
-    // TODO: Memastikan addSchedule method sudah benar
     public void addSchedule(Timestamp calendar) {
         for(Schedule s : this.schedules) {
             if(s.departureSchedule.equals(calendar)) {

@@ -35,18 +35,6 @@ public class Payment extends Invoice
     public int getBusId() {
         return this.busId;
     }
-    
-    public String getDepartureInfo() {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
-        String curr_date = SDFormat.format(departureDate.getTime());
-        return "Current Date: " + curr_date + " Id: " + Integer.toString(this.id) + "\nBuyerId: " + Integer.toString(this.buyerId) + "\nRenterId: " + Integer.toString(this.renterId) + "\nTime: " + this.time.getTime() + "\nBusId: " + Integer.toString(this.busId) + "\nDepartureDate: " + this.departureDate.getTime() + "\nBusSeat: " + this.busSeat;
-    }
-    
-    public String getTime() {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
-        String curr_date = SDFormat.format(departureDate.getTime());
-        return curr_date;
-    }
 
     public static Schedule availableSchedule(Timestamp departureSchedule, String seat, Bus bus) {
         for(Schedule s : bus.schedules) {
@@ -68,7 +56,7 @@ public class Payment extends Invoice
         return null;
     }
 
-    // yang ini melakukan booking utk 1 seat
+    // Metode ini melakukan booking utk 1 seat
     public static boolean makeBooking(Timestamp departureSchedule, String seat, Bus bus) {
         if(availableSchedule(departureSchedule, seat, bus) != null) {
             for(Schedule s : bus.schedules) {
@@ -81,7 +69,7 @@ public class Payment extends Invoice
             return false;
     }
 
-    // yang ini melakukan booking utk 1 bus
+    // Metode ini melakukan booking utk sejumlah seat
     public static boolean makeBooking(Timestamp departureSchedule, List<String> seatList, Bus bus) {
         for(Schedule s : bus.schedules) {
             if(s.departureSchedule.equals(departureSchedule) && s.isSeatAvailable(seatList)) {
