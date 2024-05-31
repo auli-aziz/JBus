@@ -19,5 +19,5 @@ public enum City
     TANGERANG,
     BOGOR,
     BEKASI,
-    SUKABUMI;
+    SUKABUMI
 }
